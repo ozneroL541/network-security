@@ -12,6 +12,5 @@ $(PDF): $(TEX)
 clean:
 	rm *.aux *.log *.out *.toc *.nav *.snm *.vrb
 
-delete:
-	clean
+delete: clean
 	rm $(PDF)
