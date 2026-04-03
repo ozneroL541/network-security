@@ -1,49 +1,49 @@
 # LaTeX intermediate files
-*.aux
-*.bbl
-*.bcf
-*.blg
-*.brf
-*.fdb_latexmk
-*.fls
-*.glg
-*.glo
-*.gls
-*.idx
-*.ilg
-*.ind
-*.ist
-*.lof
-*.log
-*.lot
-*.lox
-*.nav
-*.out
-*.run.xml
-*.snm
-*.synctex.gz
-*.toc
-*.vrb
-*.xdv
+**/*.aux
+**/*.bbl
+**/*.bcf
+**/*.blg
+**/*.brf
+**/*.fdb_latexmk
+**/*.fls
+**/*.glg
+**/*.glo
+**/*.gls
+**/*.idx
+**/*.ilg
+**/*.ind
+**/*.ist
+**/*.lof
+**/*.log
+**/*.lot
+**/*.lox
+**/*.nav
+**/*.out
+**/*.run.xml
+**/*.snm
+**/*.synctex.gz
+**/*.toc
+**/*.vrb
+**/*.xdv
 
 # Bibliography and glossary helpers
-*.acn
-*.acr
-*.alg
-*.loa
+**/*.acn
+**/*.acr
+**/*.alg
+**/*.loa
 
 # Build outputs (optional: uncomment if not versioning final artifacts)
-# *.pdf
-*.dvi
-*.ps
+# **/*.pdf
+**/*.dvi
+**/*.ps
 
 # minted / pygments
-_minted*
-*.pyg
+**/_minted*
+**/*.pyg
 
 # Temporary/editor files
-*~
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
+**/*~
+**/*.swp
+**/*.swo
+**/.DS_Store
+**/Thumbs.db
