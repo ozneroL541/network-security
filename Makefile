@@ -11,3 +11,7 @@ slides:
 clean:
 	$(MAKE) -C report clean
 	$(MAKE) -C slides clean
+
+delete:
+	$(MAKE) -C report delete
+	$(MAKE) -C slides delete
