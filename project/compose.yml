@@ -1,0 +1,160 @@
+services:
+    node1:
+        build:
+            context: ./nodes
+            dockerfile: Dockerfile
+        container_name: node1
+        environment:
+            - NODE_ROLE=target-web
+            - ROUTE_NET2=172.30.2.0/24
+            - ROUTE_NET2_VIA=172.30.1.2
+            - ROUTE_NET3=172.30.3.0/24
+            - ROUTE_NET3_VIA=172.30.1.3
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
+        mem_limit: 320m
+        mem_reservation: 128m
+        networks:
+            net1:
+                ipv4_address: 172.30.1.11
+        healthcheck:
+            test: ["CMD-SHELL", "nc -z localhost 22 && nc -z localhost 80"]
+            interval: 30s
+            timeout: 5s
+            retries: 5
+
+    node2:
+        build:
+            context: ./nodes
+            dockerfile: Dockerfile
+        container_name: node2
+        environment:
+            - NODE_ROLE=router
+            - ROUTE_NET3=172.30.3.0/24
+            - ROUTE_NET3_VIA=172.30.2.3
+        cap_add:
+            - NET_ADMIN
+        sysctls:
+            - net.ipv4.ip_forward=1
+        restart: unless-stopped
+        mem_limit: 160m
+        mem_reservation: 64m
+        networks:
+            net1:
+                ipv4_address: 172.30.1.2
+            net2:
+                ipv4_address: 172.30.2.2
+
+    node3:
+        build:
+            context: ./nodes
+            dockerfile: Dockerfile
+        container_name: node3
+        environment:
+            - NODE_ROLE=target-ssh
+            - ROUTE_NET1=172.30.1.0/24
+            - ROUTE_NET1_VIA=172.30.2.2
+            - ROUTE_NET3=172.30.3.0/24
+            - ROUTE_NET3_VIA=172.30.2.3
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
+        mem_limit: 256m
+        mem_reservation: 96m
+        networks:
+            net2:
+                ipv4_address: 172.30.2.11
+        healthcheck:
+            test: ["CMD-SHELL", "nc -z localhost 22"]
+            interval: 30s
+            timeout: 5s
+            retries: 5
+
+    node4:
+        build:
+            context: ./nodes
+            dockerfile: Dockerfile
+        container_name: node4
+        environment:
+            - NODE_ROLE=router
+            - ROUTE_NET1=172.30.1.0/24
+            - ROUTE_NET1_VIA=172.30.2.2
+        cap_add:
+            - NET_ADMIN
+        sysctls:
+            - net.ipv4.ip_forward=1
+        restart: unless-stopped
+        mem_limit: 160m
+        mem_reservation: 64m
+        networks:
+            net2:
+                ipv4_address: 172.30.2.3
+            net3:
+                ipv4_address: 172.30.3.3
+
+    node5:
+        build:
+            context: ./nodes
+            dockerfile: Dockerfile
+        container_name: node5
+        environment:
+            - NODE_ROLE=target-mixed
+            - ROUTE_NET1=172.30.1.0/24
+            - ROUTE_NET1_VIA=172.30.3.2
+            - ROUTE_NET2=172.30.2.0/24
+            - ROUTE_NET2_VIA=172.30.3.3
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
+        mem_limit: 320m
+        mem_reservation: 128m
+        networks:
+            net3:
+                ipv4_address: 172.30.3.11
+        healthcheck:
+            test: ["CMD-SHELL", "nc -z localhost 22 && nc -z localhost 80"]
+            interval: 30s
+            timeout: 5s
+            retries: 5
+
+    node6:
+        build:
+            context: ./nodes
+            dockerfile: Dockerfile
+        container_name: node6
+        environment:
+            - NODE_ROLE=router
+            - ROUTE_NET2=172.30.2.0/24
+            - ROUTE_NET2_VIA=172.30.3.3
+        cap_add:
+            - NET_ADMIN
+        sysctls:
+            - net.ipv4.ip_forward=1
+        restart: unless-stopped
+        mem_limit: 160m
+        mem_reservation: 64m
+        networks:
+            net1:
+                ipv4_address: 172.30.1.3
+            net3:
+                ipv4_address: 172.30.3.2
+
+networks:
+    net1:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.30.1.0/24
+    net2:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.30.2.0/24
+    net3:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.30.3.0/24
+
+# volumes removed: using locally installed OpenVAS
