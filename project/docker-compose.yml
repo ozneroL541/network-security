@@ -1,0 +1,121 @@
+###############################################################
+#  Vulnerability Assessment Lab – hub-and-spoke topology
+#
+#  Network: 172.16.0.0/24
+#    172.16.0.1  hub      (central router / pivot point)
+#    172.16.0.2  vulnbox2 (Apache Struts 2.3.31 – CVE-2017-5638 RCE)
+#    172.16.0.3  vulnbox3 (HTTP + DVWA-like)
+#    172.16.0.4  vulnbox4 (SSH weak creds)
+#    172.16.0.5  vulnbox5 (SMB / Samba)
+#    172.16.0.6  vulnbox6 (MySQL exposed)
+###############################################################
+
+networks:
+  vuln_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.254   # real gateway – keeps .1 free for hub
+
+services:
+
+  # ─── HUB ──────────────────────────────────────────────────
+  hub:
+    image: ubuntu:22.04
+    container_name: hub
+    hostname: hub
+    networks:
+      vuln_net:
+        ipv4_address: 172.16.0.1
+    cap_add:
+      - NET_ADMIN
+    command: >
+      bash -c "
+        apt-get update -qq &&
+        apt-get install -y -qq iproute2 iputils-ping nmap curl net-tools &&
+        echo '[HUB] Ready – acting as central pivot node' &&
+        tail -f /dev/null
+      "
+    restart: unless-stopped
+
+  # ─── VULNBOX 2 – Apache Struts 2.3.31 (CVE-2017-5638 RCE) ──
+  # Unauthenticated RCE via malformed Content-Type header (Equifax vuln)
+  # App URL: http://172.16.0.2:8080/struts2-showcase
+  vulnbox2:
+    build:
+      context: ./struts
+      dockerfile: Dockerfile
+    image: vuln-struts:2.3.31
+    container_name: vulnbox2
+    hostname: vulnbox2
+    networks:
+      vuln_net:
+        ipv4_address: 172.16.0.2
+    restart: unless-stopped
+
+  # ─── VULNBOX 3 – DVWA (web app vulns: SQLi, XSS, RFI …) ──
+  vulnbox3:
+    image: vulnerables/web-dvwa
+    container_name: vulnbox3
+    hostname: vulnbox3
+    networks:
+      vuln_net:
+        ipv4_address: 172.16.0.3
+    environment:
+      - MYSQL_PASS=p@ssw0rd
+    restart: unless-stopped
+
+  # ─── VULNBOX 4 – SSH with deliberately weak credentials ───
+  vulnbox4:
+    image: ubuntu:22.04
+    container_name: vulnbox4
+    hostname: vulnbox4
+    networks:
+      vuln_net:
+        ipv4_address: 172.16.0.4
+    command: >
+      bash -c "
+        apt-get update -qq &&
+        apt-get install -y -qq openssh-server &&
+        useradd -m -s /bin/bash admin &&
+        echo 'admin:admin123' | chpasswd &&
+        useradd -m -s /bin/bash user &&
+        echo 'user:password' | chpasswd &&
+        mkdir -p /run/sshd &&
+        sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config &&
+        sed -i 's/#PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
+        echo 'root:toor' | chpasswd &&
+        /usr/sbin/sshd -D
+      "
+    restart: unless-stopped
+
+  # ─── VULNBOX 5 – Samba (EternalBlue-era misconfiguration) ─
+  vulnbox5:
+    image: dperson/samba
+    container_name: vulnbox5
+    hostname: vulnbox5
+    networks:
+      vuln_net:
+        ipv4_address: 172.16.0.5
+    environment:
+      - USERID=1000
+      - GROUPID=1000
+    command: >
+      -u "guest;guest"
+      -s "public;/public;yes;no;yes;all;none"
+      -s "private;/private;no;no;no;all;none"
+    restart: unless-stopped
+
+  # ─── VULNBOX 6 – MySQL exposed (no root password) ─────────
+  vulnbox6:
+    image: mysql:5.7
+    container_name: vulnbox6
+    hostname: vulnbox6
+    networks:
+      vuln_net:
+        ipv4_address: 172.16.0.6
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_HOST=%          # allow remote root login
+    restart: unless-stopped
