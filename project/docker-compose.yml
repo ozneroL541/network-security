@@ -34,7 +34,7 @@ services:
       bash -c "
         apt-get update -qq &&
         apt-get install -y -qq iproute2 iputils-ping nmap curl net-tools &&
-        echo '[HUB] Ready – acting as central pivot node' &&
+        echo '[HUB] Ready - acting as central pivot node' &&
         tail -f /dev/null
       "
     restart: unless-stopped
