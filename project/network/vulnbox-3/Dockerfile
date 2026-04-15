@@ -5,7 +5,6 @@
 FROM vulnerables/web-dvwa
 
 ENV MYSQL_PASS=p@ssw0rd
-
-HOSTNAME vulnbox3
+ENV HOSTNAME=vulnbox3
 
 EXPOSE 80 443
