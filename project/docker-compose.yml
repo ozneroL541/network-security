@@ -22,7 +22,7 @@ networks:
 services:
 
   # ─── VULNBOX 1 – HUB / PIVOT NODE ─────────────────────────────
-  hub:
+  vulnbox1:
     build:
       context: ./network/vulnbox-1
       dockerfile: Dockerfile
