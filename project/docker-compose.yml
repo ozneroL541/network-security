@@ -17,25 +17,21 @@ networks:
     ipam:
       config:
         - subnet: 172.16.0.0/24
-          gateway: 172.16.0.1
   net1:
     driver: macvlan
     ipam:
       config:
         - subnet: 172.16.1.0/24
-          gateway: 172.16.1.1
   net2:
     driver: macvlan
     ipam:
       config:
         - subnet: 172.16.2.0/24
-          gateway: 172.16.2.1
   net3:
     driver: macvlan
     ipam:
       config:
         - subnet: 172.16.3.0/24
-          gateway: 172.16.3.1
  
 services:
   # ─── VULNBOX 1 – Access Point ─────────────────────────────
