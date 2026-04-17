@@ -12,35 +12,45 @@
 ###############################################################
 
 networks:
+  # Bridge – directly reachable from host
   net0:
     driver: bridge
     ipam:
       config:
         - subnet: 172.16.0.0/24
+          gateway: 172.16.0.1
+
+  # Internal macvlan segments – isolated from host, routed only through vulnbox1
   net1:
-    driver: macvlan
+    driver: bridge
+    internal: true          # blocks direct host ↔ net1 traffic
     ipam:
       config:
         - subnet: 172.16.1.0/24
+          gateway: 172.16.1.1
+
   net2:
-    driver: macvlan
+    driver: bridge
+    internal: true          # blocks direct host ↔ net2 traffic
     ipam:
       config:
         - subnet: 172.16.2.0/24
+          gateway: 172.16.2.1
+
   net3:
-    driver: macvlan
+    driver: bridge
+    internal: true
     ipam:
       config:
         - subnet: 172.16.3.0/24
- 
+          gateway: 172.16.3.1
+
 services:
-  # ─── VULNBOX 1 – Access Point ─────────────────────────────
+  # ─── VULNBOX 1 – Entering node ─────────────────────────
   vulnbox1:
     build:
       context: ./network/vulnbox-1
       dockerfile: Dockerfile
-    image: ubuntu:22.04
-    privileged: true
     container_name: vulnbox1
     hostname: vulnbox1
     networks:
@@ -50,17 +60,14 @@ services:
         ipv4_address: 172.16.1.1
     cap_add:
       - NET_ADMIN
+    privileged: true
     restart: unless-stopped
- 
-  # ─── VULNBOX 2 – Apache Struts 2.3.31 (CVE-2017-5638 RCE) ──
-  # Unauthenticated RCE via malformed Content-Type header (Equifax vuln)
-  # App URL: http://172.16.0.2:8080/struts2-showcase
+
+  # ─── VULNBOX 2 – Apache Struts 2.3.31 (CVE-2017-5638) ────
   vulnbox2:
     build:
       context: ./network/vulnbox-2
       dockerfile: Dockerfile
-    privileged: true
-    image: vuln-struts:2.3.31
     container_name: vulnbox2
     hostname: vulnbox2
     networks:
@@ -68,43 +75,46 @@ services:
         ipv4_address: 172.16.1.2
       net2:
         ipv4_address: 172.16.2.1
+    cap_add:
+      - NET_ADMIN
+    privileged: true
     restart: unless-stopped
- 
-  # ─── VULNBOX 3 – DVWA (web app vulns: SQLi, XSS, RFI …) ──
+
+  # ─── VULNBOX 3 – DVWA ─────────────────────────────────────
   vulnbox3:
     build:
       context: ./network/vulnbox-3
       dockerfile: Dockerfile
-    privileged: true
-    image: vulnerables/web-dvwa
     container_name: vulnbox3
     hostname: vulnbox3
     networks:
       net2:
         ipv4_address: 172.16.2.2
+    cap_add:
+      - NET_ADMIN
+    privileged: true
     restart: unless-stopped
- 
-  # ─── VULNBOX 4 – SSH with deliberately weak credentials ───
+
+  # ─── VULNBOX 4 – SSH weak credentials ────────────────────
   vulnbox4:
     build:
       context: ./network/vulnbox-4
       dockerfile: Dockerfile
-    privileged: true
-    image: ubuntu:22.04
     container_name: vulnbox4
     hostname: vulnbox4
     networks:
-      net3:
-        ipv4_address: 172.16.3.2
+      net2:
+        ipv4_address: 172.16.2.3
+    cap_add:
+      - NET_ADMIN
+    privileged: true
     restart: unless-stopped
- 
-  # ─── VULNBOX 5 – Samba (EternalBlue-era misconfiguration) ─
+
+  # ─── VULNBOX 5 – Samba ───────────────────────────────────
   vulnbox5:
     build:
       context: ./network/vulnbox-5
       dockerfile: Dockerfile
-    privileged: true
-    image: dperson/samba
     container_name: vulnbox5
     hostname: vulnbox5
     networks:
@@ -112,17 +122,19 @@ services:
         ipv4_address: 172.16.2.4
       net3:
         ipv4_address: 172.16.3.1
+    cap_add:
+      - NET_ADMIN
+    privileged: true
     restart: unless-stopped
- 
-  # ─── VULNBOX 6 – MySQL exposed (no root password) ─────────
+
+  # ─── VULNBOX 6 – MySQL no root password ──────────────────
   vulnbox6:
     build:
       context: ./network/vulnbox-6
       dockerfile: Dockerfile
-    image: mysql:5.7
     container_name: vulnbox6
     hostname: vulnbox6
     networks:
       net3:
-        ipv4_address: 172.16.3.3
+        ipv4_address: 172.16.3.2
     restart: unless-stopped

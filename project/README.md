@@ -2,17 +2,7 @@
 
 A Docker-based hub-and-spoke lab matching the topology in your diagram.
 
-```
-        172.16.0.5 (Samba)
-             |
-172.16.0.6 (MySQL) ── 172.16.0.4 (SSH)
-             \       /
-             172.16.0.1  <-- HUB (pivot / scanner)
-             /       \
-172.16.0.2 (Struts)  172.16.0.3 (DVWA)
-             |
-            HOST  <── you are here
-```
+container-network.png
 
 ---
 

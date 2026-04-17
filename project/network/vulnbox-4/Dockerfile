@@ -3,7 +3,7 @@
 FROM ubuntu:22.04
 
 RUN apt-get update -qq && \
-    apt-get install -y -qq openssh-server net-tools && \
+    apt-get install -y -qq openssh-server iproute2 && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m -s /bin/bash admin; \
     echo 'admin:admin123' | chpasswd; \
