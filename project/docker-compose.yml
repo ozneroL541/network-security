@@ -18,27 +18,21 @@ networks:
       config:
         - subnet: 172.16.0.0/24
           gateway: 172.16.0.1
- 
   net1:
     driver: bridge
     ipam:
       config:
         - subnet: 172.16.1.0/24
-          gateway: 172.16.1.1
- 
   net2:
     driver: bridge
     ipam:
       config:
         - subnet: 172.16.2.0/24
-          gateway: 172.16.2.1
- 
   net3:
     driver: bridge
     ipam:
       config:
         - subnet: 172.16.3.0/24
-          gateway: 172.16.3.1
  
 services:
   # ─── VULNBOX 1 – Access Point ─────────────────────────────
@@ -96,6 +90,7 @@ services:
     build:
       context: ./network/vulnbox-4
       dockerfile: Dockerfile
+    privileged: true
     image: ubuntu:22.04
     container_name: vulnbox4
     hostname: vulnbox4
@@ -109,6 +104,7 @@ services:
     build:
       context: ./network/vulnbox-5
       dockerfile: Dockerfile
+    privileged: true
     image: dperson/samba
     container_name: vulnbox5
     hostname: vulnbox5

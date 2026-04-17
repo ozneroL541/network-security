@@ -3,7 +3,7 @@
 FROM ubuntu:22.04
 
 RUN apt-get update -qq && \
-    apt-get install -y -qq openssh-server && \
+    apt-get install -y -qq openssh-server net-tools && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m -s /bin/bash admin; \
     echo 'admin:admin123' | chpasswd; \
@@ -15,5 +15,9 @@ RUN apt-get update -qq && \
     echo 'root:toor' | chpasswd
 
 EXPOSE 22
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/sbin/sshd", "-D"]

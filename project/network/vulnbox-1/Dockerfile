@@ -11,7 +11,7 @@ RUN apt-get update -qq && \
 RUN echo '[HUB] Ready - acting as central pivot node'
 
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["tail", "-f", "/dev/null"]
-
-ENTRYPOINT ["/entrypoint.sh"]

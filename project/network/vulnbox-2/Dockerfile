@@ -13,7 +13,8 @@ RUN apt-get update -qq && \
         openjdk-8-jdk-headless \
         wget \
         curl \
-        unzip && \
+        unzip \
+        net-tools && \
     rm -rf /var/lib/apt/lists/*
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -52,5 +53,9 @@ RUN rm -rf \
 COPY tomcat-users.xml "$CATALINA_HOME/conf/tomcat-users.xml"
 
 EXPOSE 8080
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["sh", "-c", "$CATALINA_HOME/bin/catalina.sh run"]
