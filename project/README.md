@@ -1,7 +1,5 @@
 # Vulnerability Assessment Lab
 
-A Docker-based hub-and-spoke lab matching the topology in your diagram.
-
 ![Container network topology](container-network.png)
 
 ---
