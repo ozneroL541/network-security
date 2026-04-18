@@ -1,14 +1,14 @@
 ###############################################################
 #  Vulnerability Assessment Lab
 #
-#  Network: 172.16.0.0/22
-#    host     - 172.16.0.1/24
-#    vulnbox1 - 172.16.0.2/24 172.16.1.1/24
-#    vulnbox2 - 172.16.1.2/24 172.16.2.1/24
-#    vulnbox3 - 172.16.2.2/24
-#    vulnbox4 - 172.16.2.3/24
-#    vulnbox5 - 172.16.2.4/24 172.16.3.1/24
-#    vulnbox6 - 172.16.3.2/24
+#  Network: 172.30.0.0/22
+#    host     - 172.30.0.1/24
+#    vulnbox1 - 172.30.0.2/24 172.30.1.1/24
+#    vulnbox2 - 172.30.1.2/24 172.30.2.1/24
+#    vulnbox3 - 172.30.2.2/24
+#    vulnbox4 - 172.30.2.3/24
+#    vulnbox5 - 172.30.2.4/24 172.30.3.1/24
+#    vulnbox6 - 172.30.3.2/24
 ###############################################################
 
 networks:
@@ -17,8 +17,8 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.16.0.0/24
-          gateway: 172.16.0.1
+        - subnet: 172.30.0.0/24
+          gateway: 172.30.0.1
 
   # Internal macvlan segments – isolated from host, routed only through vulnbox1
   net1:
@@ -26,24 +26,21 @@ networks:
     internal: true          # blocks direct host ↔ net1 traffic
     ipam:
       config:
-        - subnet: 172.16.1.0/24
-          gateway: 172.16.1.1
+        - subnet: 172.30.1.0/24
 
   net2:
     driver: bridge
     internal: true          # blocks direct host ↔ net2 traffic
     ipam:
       config:
-        - subnet: 172.16.2.0/24
-          gateway: 172.16.2.1
+        - subnet: 172.30.2.0/24
 
   net3:
     driver: bridge
     internal: true
     ipam:
       config:
-        - subnet: 172.16.3.0/24
-          gateway: 172.16.3.1
+        - subnet: 172.30.3.0/24
 
 services:
   # ─── VULNBOX 1 – Entering node ─────────────────────────
@@ -55,9 +52,9 @@ services:
     hostname: vulnbox1
     networks:
       net0:
-        ipv4_address: 172.16.0.2
+        ipv4_address: 172.30.0.2
       net1:
-        ipv4_address: 172.16.1.1
+        ipv4_address: 172.30.1.1
     cap_add:
       - NET_ADMIN
     privileged: true
@@ -72,9 +69,9 @@ services:
     hostname: vulnbox2
     networks:
       net1:
-        ipv4_address: 172.16.1.2
+        ipv4_address: 172.30.1.2
       net2:
-        ipv4_address: 172.16.2.1
+        ipv4_address: 172.30.2.1
     cap_add:
       - NET_ADMIN
     privileged: true
@@ -89,7 +86,7 @@ services:
     hostname: vulnbox3
     networks:
       net2:
-        ipv4_address: 172.16.2.2
+        ipv4_address: 172.30.2.2
     cap_add:
       - NET_ADMIN
     privileged: true
@@ -104,7 +101,7 @@ services:
     hostname: vulnbox4
     networks:
       net2:
-        ipv4_address: 172.16.2.3
+        ipv4_address: 172.30.2.3
     cap_add:
       - NET_ADMIN
     privileged: true
@@ -119,9 +116,9 @@ services:
     hostname: vulnbox5
     networks:
       net2:
-        ipv4_address: 172.16.2.4
+        ipv4_address: 172.30.2.4
       net3:
-        ipv4_address: 172.16.3.1
+        ipv4_address: 172.30.3.1
     cap_add:
       - NET_ADMIN
     privileged: true
@@ -136,5 +133,5 @@ services:
     hostname: vulnbox6
     networks:
       net3:
-        ipv4_address: 172.16.3.2
+        ipv4_address: 172.30.3.2
     restart: unless-stopped

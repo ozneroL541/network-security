@@ -15,12 +15,12 @@
 
 | Container  | IP            | IP 2          | Service                           | Default Creds              |
 |------------|---------------|---------------|-----------------------------------|----------------------------|
-| vulnbox1   | 172.16.0.2/24 | 172.16.1.1/24 | Ubuntu 22.04                      | – |
-| vulnbox2   | 172.16.1.2/24 | 172.16.2.1/24 | Apache Struts 2.3.31              | - | 
-| vulnbox3   | 172.16.2.2/24 |               | DVWA – SQLi, XSS, CSRF, RFI, etc. | root:p@ssw0rd |
-| vulnbox4   | 172.16.2.3/24 |               | SSH weak passwords                | admin:admin123, user:password, root:toor  |
-| vulnbox5   | 172.16.2.4/24 | 172.16.3.1/24 | Samba open share                  | guest:guest                |
-| vulnbox6   | 172.16.3.2/24 |               | MySQL no-root-password            | root (no password)         |
+| vulnbox1   | 172.30.0.2/24 | 172.30.1.1/24 | Ubuntu 22.04                      | – |
+| vulnbox2   | 172.30.1.2/24 | 172.30.2.1/24 | Apache Struts 2.3.31              | - | 
+| vulnbox3   | 172.30.2.2/24 |               | DVWA – SQLi, XSS, CSRF, RFI, etc. | root:p@ssw0rd |
+| vulnbox4   | 172.30.2.3/24 |               | SSH weak passwords                | admin:admin123, user:password, root:toor  |
+| vulnbox5   | 172.30.2.4/24 | 172.30.3.1/24 | Samba open share                  | guest:guest                |
+| vulnbox6   | 172.30.3.2/24 |               | MySQL no-root-password            | root (no password)         |
 
 ---
 
@@ -31,49 +31,49 @@ All containers are directly reachable:
 
 ```bash
 # Ping the first vulnbox
-ping 172.16.0.2
+ping 172.30.0.2
 
 # Browse DVWA
-open http://172.16.2.2
+open http://172.30.2.2
 
 # MySQL from host
-mysql -h 172.16.2.2 -u root
+mysql -h 172.30.2.2 -u root
 
 # SSH brute-force target
-ssh admin@172.16.2.3   # password: admin123
+ssh admin@172.30.2.3   # password: admin123
 ```
 
 > **Linux note:** If the subnet isn't reachable, add a route:
-> `sudo ip route add 172.16.0.0/24 dev docker0`
+> `sudo ip route add 172.30.0.0/24 dev docker0`
 
 ---
 
 ## Specific Attack Examples
 
 ### Apache Struts
-The Struts target runs on vulnbox2 at http://172.16.1.2:8080/struts2-showcase and is intentionally pinned to Struts 2.3.31, which is affected by CVE-2017-5638 (the Equifax-era remote code execution flaw). In this lab, use it to practice safe vulnerability validation and detection workflows (service identification, version fingerprinting, and controlled proof-of-concept checks) strictly inside the isolated Docker network.
+The Struts target runs on vulnbox2 at http://172.30.1.2:8080/struts2-showcase and is intentionally pinned to Struts 2.3.31, which is affected by CVE-2017-5638 (the Equifax-era remote code execution flaw). In this lab, use it to practice safe vulnerability validation and detection workflows (service identification, version fingerprinting, and controlled proof-of-concept checks) strictly inside the isolated Docker network.
 
 
 ### DVWA – SQL Injection (vulnbox3)
-1. Browse to `http://172.16.2.2`
+1. Browse to `http://172.30.2.2`
 2. Login: `admin` / `password`
 3. Go to SQL Injection, set security to Low
 4. Try payload: `' OR 1=1 --`
 
 ### SSH Weak Creds (vulnbox4)
 ```bash
-hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://172.16.2.3
+hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://172.30.2.3
 ```
 
 ### Samba (vulnbox5)
 ```bash
-smbclient -L //172.16.2.4 -U guest%guest
-smbclient //172.16.2.4/public -U guest%guest
+smbclient -L //172.30.2.4 -U guest%guest
+smbclient //172.30.2.4/public -U guest%guest
 ```
 
 ### MySQL No Auth (vulnbox6)
 ```bash
-mysql -h 172.16.3.2 -u root
+mysql -h 172.30.3.2 -u root
 SHOW DATABASES;
 ```
 
