@@ -14,7 +14,7 @@ RUN apt-get update -qq && \
         wget \
         curl \
         unzip \
-        net-tools && \
+        iproute2 && \
     rm -rf /var/lib/apt/lists/*
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -54,8 +54,5 @@ COPY tomcat-users.xml "$CATALINA_HOME/conf/tomcat-users.xml"
 
 EXPOSE 8080
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-#ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["sh", "-c", "$CATALINA_HOME/bin/catalina.sh run"]

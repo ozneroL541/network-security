@@ -1,38 +1,36 @@
 #!/bin/bash
+sudo iptables -I FORWARD 1 -s 172.30.0.0/22 -d 172.30.0.0/22 -j ACCEPT
 
-# Define the Map: Subnet -> Which IP should be the Gateway
-# net1 (172.30.1.0) -> vulnbox1 (172.30.1.1)
-# net2 (172.30.2.0) -> vulnbox2 (172.30.2.1)
-# net3 (172.30.3.0) -> vulnbox5 (172.30.3.1)
+# --- 1. HOST ROUTES ---
+# Tell your physical machine to send lab traffic to vulnbox1
+sudo ip route replace 172.30.1.0/24 via 172.30.0.2
+sudo ip route replace 172.30.2.0/24 via 172.30.0.2
+sudo ip route replace 172.30.3.0/24 via 172.30.0.2
 
-declare -A GATEWAYS=( 
-    ["172.30.1"]="172.30.1.1" 
-    ["172.30.2"]="172.30.2.1" 
-    ["172.30.3"]="172.30.3.1" 
-)
+# --- 2. VULNBOX 1 (The Entrance) ---
+docker exec -u 0 vulnbox1 sysctl -w net.ipv4.ip_forward=1
+# Route to net2 and net3 via vulnbox2
+docker exec -u 0 vulnbox1 ip route replace 172.30.2.0/24 via 172.30.1.2
+docker exec -u 0 vulnbox1 ip route replace 172.30.3.0/24 via 172.30.1.2
+docker exec -u 0 vulnbox1 ip route add default via 172.30.0.1
 
-echo "[*] Starting Gateway Migration..."
+# --- 3. VULNBOX 2 (The Middleman) ---
+docker exec -u 0 vulnbox2 sysctl -w net.ipv4.ip_forward=1
+docker exec -u 0 vulnbox2 ip route replace 172.30.3.0/24 via 172.30.2.4
+docker exec -u 0 vulnbox2 ip route add default via 172.30.1.1
 
-for container in $(docker ps --format '{{.Names}}'); do
-    # Get the IP address of the container
-    IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $container)
-    
-    # Extract the prefix (e.g., 172.30.2)
-    PREFIX=$(echo $IP | cut -d'.' -f1-3)
+# --- 3. VULNBOX 3 ---
+docker exec -u 0 vulnbox3 ip route add 172.30.3.0/24 via 172.30.2.4
+docker exec -u 0 vulnbox3 ip route add default via 172.30.2.1
 
-    # Check if this subnet has a custom gateway defined in our map
-    if [[ -n "${GATEWAYS[$PREFIX]}" ]]; then
-        NEW_GW="${GATEWAYS[$PREFIX]}"
-        
-        # Don't make a container its own gateway (prevents infinite loops)
-        if [[ "$IP" != "$NEW_GW" ]]; then
-            echo "[>] Updating $container ($IP) to use Gateway $NEW_GW"
-            
-            # Remove Docker's default and add the Vulnbox
-            docker exec -u 0 "$container" ip route del default 2>/dev/null
-            docker exec -u 0 "$container" ip route add default via "$NEW_GW"
-        fi
-    fi
-done
+# --- 4. VULNBOX 4 ---
+docker exec -u 0 vulnbox4 ip route replace 172.30.3.0/24 via 172.30.2.4
+docker exec -u 0 vulnbox4 ip route add default via 172.30.2.1
 
-echo "[+] Done. Internal traffic is now routed through your pivot boxes."
+
+# Vulnbox 5 (Another Router):
+docker exec -u 0 vulnbox5 sysctl -w net.ipv4.ip_forward=1
+docker exec -u 0 vulnbox5 ip route add default via 172.30.2.1
+
+# Vulnbox 6: Use vulnbox5 as the exit
+docker exec -u 0 vulnbox6 ip route add default via 172.30.3.1
