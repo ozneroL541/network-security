@@ -15,14 +15,18 @@ networks:
   # Bridge – directly reachable from host
   net0:
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: "vulnlab0"
     ipam:
       config:
         - subnet: 172.30.0.0/24
-          gateway: 172.30.0.254
+          gateway: 172.30.0.1
 
   # Internal macvlan segments – isolated from host, routed only through vulnbox1
   net1:
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: "vulnlab1"
     internal: true          # blocks direct host ↔ net1 traffic
     ipam:
       config:
@@ -31,6 +35,8 @@ networks:
 
   net2:
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: "vulnlab2"
     internal: true          # blocks direct host ↔ net2 traffic
     ipam:
       config:
@@ -39,6 +45,8 @@ networks:
 
   net3:
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: "vulnlab3"
     internal: true
     ipam:
       config:
