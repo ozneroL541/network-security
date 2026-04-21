@@ -146,4 +146,7 @@ services:
     networks:
       net3:
         ipv4_address: 172.30.3.2
+    cap_add:
+      - NET_ADMIN
+    privileged: true
     restart: unless-stopped
