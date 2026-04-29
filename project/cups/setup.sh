@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt install cups
+apt install -y cups
 
 tee /etc/cups/cupsd.conf << EOF
 Listen 0.0.0.0:631
