@@ -34,30 +34,29 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 </VirtualHost>
 
 <VirtualHost *:443>
-    ServerName localhost
+    ServerName 127.0.0.1
 
     SSLEngine on
     SSLCertificateFile /etc/apache2/ssl/weak.crt
     SSLCertificateKeyFile /etc/apache2/ssl/weak.key
 
-    # INTENTIONALLY WEAK SETTINGS
-    SSLProtocol all -SSLv3 -TLSv1.3 -TLSv1.2 -TLSv1.1
-    # leaves TLS 1.0 enabled
+    # Allow TLS 1.0 only if OpenSSL supports it
+    #SSLProtocol all -SSLv3 -TLSv1.3 -TLSv1.2 -TLSv1.1
+    SSLProtocol TLSv1
 
-    SSLCipherSuite ALL:NULL:EXPORT:LOW:MEDIUM:DES:RC4:MD5
+    #SSLCipherSuite ALL:NULL:EXPORT:LOW:MEDIUM:DES:RC4:MD5
     #SSLCipherSuite aNULL:EXPORT:LOW:ALL
-    #SSLInsecureRenegotiation on
+    SSLCipherSuite HIGH:!aNULL
+
     SSLHonorCipherOrder off
 
-    # Disable protections
-    SSLCompression on
+    #SSLCompression on
     SSLSessionTickets On
 
     ProxyPreserveHost On
     ProxyPass / http://127.0.0.1:8080/
     ProxyPassReverse / http://127.0.0.1:8080/
 
-    # Remove security headers if present
     Header always unset Strict-Transport-Security
     Header always unset X-Frame-Options
     Header always unset X-Content-Type-Options
