@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-apt install apache2 php7 libapache2-mod-php7
+apt install apache2 php libapache2-mod-php
 
 a2enmod ssl
 a2enmod rewrite
