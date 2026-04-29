@@ -24,7 +24,7 @@ cp weak.* /etc/apache2/ssl/
 
 tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 <VirtualHost *:80>
-    ServerName 127.0.0.1:80
+    ServerName localhost
 
     ProxyPreserveHost On
     ProxyPass / http://127.0.0.1:8080/
@@ -34,7 +34,7 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 </VirtualHost>
 
 <VirtualHost *:443>
-    ServerName 127.0.0.1:443
+    ServerName localhost
 
     SSLEngine on
     SSLCertificateFile /etc/apache2/ssl/weak.crt
@@ -65,7 +65,6 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 EOF
 
 a2ensite vulnbox.conf
-systemctl reload apache2
 
 tee /etc/php/7.4/apache2/php.ini << EOF
 display_errors = On
