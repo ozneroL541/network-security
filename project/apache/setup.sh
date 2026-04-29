@@ -6,6 +6,8 @@ apt install -y apache2 php libapache2-mod-php
 a2enmod ssl
 a2enmod rewrite
 a2enmod headers
+a2enmod proxy
+a2enmod proxy_http
 
 output_dir=certs
 mkdir -p $output_dir
@@ -20,7 +22,7 @@ cp weak.* /etc/apache2/ssl/
 
 tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 <VirtualHost *:80>
-    ServerName localhost
+    ServerName 127.0.0.1:80
 
     ProxyPreserveHost On
     ProxyPass / http://127.0.0.1:8080/
@@ -30,7 +32,7 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 </VirtualHost>
 
 <VirtualHost *:443>
-    ServerName localhost
+    ServerName 127.0.0.1:443
 
     SSLEngine on
     SSLCertificateFile /etc/apache2/ssl/weak.crt
