@@ -1,0 +1,4 @@
+Enable all unsecure stuff you can.
+e.g.
+PermitRootLogin yes
+PasswordAuthentication no
