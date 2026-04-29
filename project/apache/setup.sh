@@ -8,6 +8,8 @@ a2enmod rewrite
 a2enmod headers
 a2enmod proxy
 a2enmod proxy_http
+echo "ServerName 127.0.0.1" | sudo tee /etc/apache2/conf-available/servername.conf
+sudo a2enconf servername
 
 output_dir=certs
 mkdir -p $output_dir
