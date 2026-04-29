@@ -1,4 +1,8 @@
 #!/bin/bash
+
+
+apt install apache2 php7.4 libapache2-mod-php7.4
+
 a2enmod ssl
 a2enmod rewrite
 a2enmod headers
@@ -58,8 +62,6 @@ EOF
 
 a2ensite vulnbox.conf
 systemctl reload apache2
-
-apt install php7.4 libapache2-mod-php7.4
 
 tee /etc/php/7.4/apache2/php.ini << EOF
 display_errors = On
