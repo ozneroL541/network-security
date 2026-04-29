@@ -42,7 +42,7 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 
     # Allow TLS 1.0 only if OpenSSL supports it
     #SSLProtocol all -SSLv3 -TLSv1.3 -TLSv1.2 -TLSv1.1
-    SSLProtocol TLSv1
+    SSLProtocol all -SSLv3
 
     #SSLCipherSuite ALL:NULL:EXPORT:LOW:MEDIUM:DES:RC4:MD5
     #SSLCipherSuite aNULL:EXPORT:LOW:ALL
