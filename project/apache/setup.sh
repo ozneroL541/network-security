@@ -41,13 +41,13 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
     SSLCertificateKeyFile /etc/apache2/ssl/weak.key
 
     # Allow TLS 1.0 only if OpenSSL supports it
-    #SSLProtocol all -SSLv3 -TLSv1.3 -TLSv1.2 -TLSv1.1
-    SSLProtocol all -SSLv3
+    SSLProtocol all -SSLv3 -TLSv1.3 -TLSv1.2 -TLSv1.1 -TLSv1.0
+    #SSLProtocol all -SSLv3
 
-    #SSLCipherSuite ALL:NULL:EXPORT:LOW:MEDIUM:DES:RC4:MD5
-    #SSLCipherSuite aNULL:EXPORT:LOW:ALL
-    #SSLCipherSuite HIGH:!aNULL
-    SSLCipherSuite ALL:NULL:EXPORT:LOW:@SECLEVEL=0
+    SSLCipherSuite ALL:NULL:EXPORT:LOW:MEDIUM:DES:RC4:MD5:@SECLEVEL=0
+    #SSLCipherSuite aNULL:EXPORT:LOW:ALL:@SECLEVEL=0
+    #SSLCipherSuite HIGH:!aNULL:@SECLEVEL=0
+    #SSLCipherSuite ALL:NULL:EXPORT:LOW:@SECLEVEL=0
 
     SSLHonorCipherOrder off
 
