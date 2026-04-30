@@ -2,7 +2,7 @@
 # Stop and remove any existing containers
 docker compose down --remove-orphans
 # Start the vulnbox network
-docker compose up --build --remove-orphans -d
+docker compose up --remove-orphans -d
 # Allow forwarding between containers
 sudo iptables -I FORWARD 1 -s 172.30.0.0/22 -d 172.30.0.0/22 -j ACCEPT
 # Remove the default IP addresses from the bridge interfaces
