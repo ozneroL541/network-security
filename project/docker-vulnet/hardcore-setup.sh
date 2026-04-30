@@ -5,7 +5,7 @@
 
 docker_interface="vulnlab0"
 docker_subnet="172.30.0.0/22"
-interface="eth0"
+interface=$(ip -o -f inet addr show | awk '/scope global/ {print $2}' | head -n 1)
 subnet=$(ipcalc -n -p "$(ip -o -f inet addr show $interface | awk '{print $4}')" | awk -F= '{print $2"/"$3}')
 
 ./setup.sh
