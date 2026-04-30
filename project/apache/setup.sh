@@ -9,8 +9,8 @@ a2enmod headers
 a2enmod proxy
 a2enmod proxy_http
 a2dissite 000-default.conf
-echo "ServerName 127.0.0.1" | sudo tee /etc/apache2/conf-available/servername.conf
-sudo a2enconf servername
+echo "ServerName 127.0.0.1" | tee /etc/apache2/conf-available/servername.conf
+a2enconf servername
 
 output_dir=certs
 mkdir -p $output_dir

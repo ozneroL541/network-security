@@ -14,7 +14,7 @@ iptables -t nat -F POSTROUTING
 nft flush chain ip raw PREROUTING
 
 # Allow forwarding between containers
-sudo iptables -I FORWARD 1 -s $docker_subnet -d $docker_subnet -j ACCEPT
+iptables -I FORWARD 1 -s $docker_subnet -d $docker_subnet -j ACCEPT
 
 # Re-add Docker's default NAT rules
 iptables -t nat -A POSTROUTING -s $docker_subnet ! -o $docker_interface -j MASQUERADE
