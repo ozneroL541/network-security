@@ -8,6 +8,7 @@ a2enmod rewrite
 a2enmod headers
 a2enmod proxy
 a2enmod proxy_http
+a2dissite 000-default.conf
 echo "ServerName 127.0.0.1" | sudo tee /etc/apache2/conf-available/servername.conf
 sudo a2enconf servername
 
