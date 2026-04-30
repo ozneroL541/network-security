@@ -3,8 +3,8 @@
 # DO NOT RUN THIS ON YOUR HOST MACHINE
 # VM ONLY
 
-docker_network="vulnlab0"
-docker_subnet="172.30.0/22"
+docker_interface="vulnlab0"
+docker_subnet="172.30.0.0/22"
 interface="eth0"
 subnet=$(ipcalc -n -p "$(ip -o -f inet addr show $interface | awk '{print $4}')" | awk -F= '{print $2"/"$3}')
 
@@ -18,15 +18,15 @@ nft flush chain ip raw PREROUTING
 sudo iptables -I FORWARD 1 -s $docker_subnet -d $docker_subnet -j ACCEPT
 
 # Re-add Docker's default NAT rules
-iptables -t nat -A POSTROUTING -s $docker_subnet ! -o $docker_network -j MASQUERADE
+iptables -t nat -A POSTROUTING -s $docker_subnet ! -o $docker_interface -j MASQUERADE
 iptables -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
 
 # MASQUERADE VM traffic going into Docker bridge
-iptables -t nat -A POSTROUTING -s $subnet -o $docker_network -j MASQUERADE
+iptables -t nat -A POSTROUTING -s $subnet -o $docker_interface -j MASQUERADE
 
 # Allow forwarding between eth and bridge
-iptables -I FORWARD 1 -i $interface -o $docker_network -j ACCEPT
-iptables -I FORWARD 1 -i $docker_network -o $interface -j ACCEPT
+iptables -I FORWARD 1 -i $interface -o $docker_interface -j ACCEPT
+iptables -I FORWARD 1 -i $docker_interface -o $interface -j ACCEPT
 
 # Allow Docker chain
 iptables -I DOCKER 1 -i $interface -d $docker_subnet -j ACCEPT
