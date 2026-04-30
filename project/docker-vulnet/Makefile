@@ -12,7 +12,7 @@ clean:
 release:
 	@echo '[Unit]'	> $(SERVICE_FILE)
 	@echo 'Description=Docker Vulnet Service'	>> $(SERVICE_FILE)
-	@echo 'After=network.target docker.service'	>> $(SERVICE_FILE)
+	@echo 'After=network.target docker.service multi-user.target'	>> $(SERVICE_FILE)
 	@echo 'StartLimitIntervalSec=0'	>> $(SERVICE_FILE)
 	@echo ''	>> $(SERVICE_FILE)
 	@echo '[Service]'	>> $(SERVICE_FILE)
@@ -21,7 +21,7 @@ release:
 	@echo 'RestartSec=1'	>> $(SERVICE_FILE)
 	@echo 'User=root'	>> $(SERVICE_FILE)
 	@echo 'WorkingDirectory=$(PWD)'	>> $(SERVICE_FILE)
-	@echo 'ExecStart=/bin/bash $(PWD)/hardcore-setup.sh'	>> $(SERVICE_FILE)
+	@echo 'ExecStart=/bin/bash -v hardcore-setup.sh'	>> $(SERVICE_FILE)
 	@echo ''	>> $(SERVICE_FILE)
 	@echo '[Install]'	>> $(SERVICE_FILE)
 	@echo 'WantedBy=multi-user.target'	>> $(SERVICE_FILE)
