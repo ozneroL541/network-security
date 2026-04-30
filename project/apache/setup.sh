@@ -17,8 +17,8 @@ mkdir -p $output_dir
 cd $output_dir
 openssl genrsa -out weak.key 1024
 openssl req -new -key weak.key -out weak.csr -subj "/C=XX/ST=Lab/L=Vulnbox/O=Insecure/OU=Testing/CN=localhost"
-openssl x509 -req -days 3650 -in weak.csr -signkey weak.key -out weak.crt -sha1
-# openssl x509 -req -days 3650 -in weak.csr -signkey weak.key -out weak_md5.crt -md5
+#openssl x509 -req -days 3650 -in weak.csr -signkey weak.key -out weak.crt -sha1
+openssl x509 -req -days 3650 -in weak.csr -signkey weak.key -out weak_md5.crt -md5
 
 mkdir -p /etc/apache2/ssl
 cp weak.* /etc/apache2/ssl/

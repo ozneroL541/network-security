@@ -21,7 +21,7 @@ release:
 	@echo 'RestartSec=1'	>> $(SERVICE_FILE)
 	@echo 'User=root'	>> $(SERVICE_FILE)
 	@echo 'WorkingDirectory=$(PWD)'	>> $(SERVICE_FILE)
-	@echo 'ExecStart=$(PWD)/setup.sh'	>> $(SERVICE_FILE)
+	@echo 'ExecStart=/bin/bash $(PWD)/hardcore-setup.sh'	>> $(SERVICE_FILE)
 	@echo ''	>> $(SERVICE_FILE)
 	@echo '[Install]'	>> $(SERVICE_FILE)
 	@echo 'WantedBy=multi-user.target'	>> $(SERVICE_FILE)
