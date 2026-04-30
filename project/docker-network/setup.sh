@@ -1,4 +1,6 @@
 #!/bin/bash
+# Stop and remove any existing containers
+docker compose down --remove-orphans
 # Start the vulnbox network
 docker compose up --build --remove-orphans -d
 # Allow forwarding between containers
