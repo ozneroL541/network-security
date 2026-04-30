@@ -34,7 +34,7 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 </VirtualHost>
 
 <VirtualHost *:443>
-    ServerName 127.0.0.1
+    ServerName localhost
 
     SSLEngine on
     SSLCertificateFile /etc/apache2/ssl/weak.crt
