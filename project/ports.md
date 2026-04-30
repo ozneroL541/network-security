@@ -1,13 +1,17 @@
 # Ports
 
 ## Debian
-- 21/tcp
-- 22/tcp
-- 80/tcp
-- 139/tcp
-- 443/tcp
-- 445/tcp
-- 631/tcp
+ - 21/tcp   open     ftp
+ - 22/tcp   open     ssh
+ - 80/tcp   open     http
+ - 139/tcp  open     netbios-ssn
+ - 443/tcp  open     https
+ - 445/tcp  open     microsoft-ds
+ - 631/tcp  open     ipp
+ - 5432/tcp filtered postgresql
+ - 8000/tcp filtered http-alt
+ - 8080/tcp filtered http-proxy
+
 
 ## Windows XP
  - 7/tcp    open          echo
