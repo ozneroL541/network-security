@@ -23,7 +23,8 @@ U:137,U:5353
 ```
 ### Docker Network
 #### vulnbox1 - 172.30.0.2 172.30.1.1
-- 
+| PORT      | STATE     | SERVICE       |
+| ---       | ---       | ---           |
 #### vulnbox2 - 172.30.1.2 172.30.2.1
 | PORT      | STATE     | SERVICE       |
 | ---       | ---       | ---           |
