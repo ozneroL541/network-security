@@ -28,6 +28,7 @@ release:
 
 install:
 	@echo "Installing Docker Vulnet Service..."
+	@make install
 	@cp $(SERVICE_FILE) /etc/systemd/system/
 	@systemctl daemon-reload
 	@systemctl enable $(SERVICE_FILE)
