@@ -6,8 +6,8 @@
  - 80/tcp   open     http
  - 139/tcp  open     netbios-ssn
  - 443/tcp  open     https
- - 445/tcp  open     microsoft-ds
- - 631/tcp  open     ipp
+ - 445/tcp  open     samba
+ - 631/tcp  open     cups
  - 5432/tcp filtered postgresql
  - 8000/tcp filtered http-alt
  - 8080/tcp filtered http-proxy
