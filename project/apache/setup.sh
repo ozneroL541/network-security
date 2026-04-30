@@ -46,12 +46,16 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
 
     #SSLCipherSuite ALL:NULL:EXPORT:LOW:MEDIUM:DES:RC4:MD5
     #SSLCipherSuite aNULL:EXPORT:LOW:ALL
-    SSLCipherSuite HIGH:!aNULL
+    #SSLCipherSuite HIGH:!aNULL
+    SSLCipherSuite ALL:NULL:EXPORT:LOW:@SECLEVEL=0
 
     SSLHonorCipherOrder off
 
     #SSLCompression on
     SSLSessionTickets On
+
+    SSLOpenSSLConfCmd MinProtocol SSLv3
+    SSLOpenSSLConfCmd CipherString DEFAULT:@SECLEVEL=0
 
     ProxyPreserveHost On
     ProxyPass / http://127.0.0.1:8080/
