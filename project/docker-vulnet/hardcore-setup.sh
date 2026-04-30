@@ -8,6 +8,8 @@ docker_subnet="172.30.0.0/22"
 interface=$(ip -o -f inet addr show | awk '/scope global/ {print $2}' | head -n 1)
 info="$(ip route show dev "$interface")"
 subnet=$(echo "$info" | awk '/proto kernel/ {print $1}')
+echo $info
+echo $subnet
 exit
 
 ./setup.sh
@@ -24,7 +26,6 @@ iptables -t nat -A POSTROUTING -s $docker_subnet ! -o $docker_interface -j MASQU
 iptables -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
 
 # MASQUERADE VM traffic going into Docker bridge
-echo "iptables -t nat -A POSTROUTING -s $subnet -o $docker_interface -j MASQUERADE"
 iptables -t nat -A POSTROUTING -s $subnet -o $docker_interface -j MASQUERADE
 
 # Allow forwarding between eth and bridge
