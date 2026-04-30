@@ -6,7 +6,8 @@
 docker_interface="vulnlab0"
 docker_subnet="172.30.0.0/22"
 interface=$(ip -o -f inet addr show | awk '/scope global/ {print $2}' | head -n 1)
-subnet=$(ip route show dev "$interface" | awk '/proto kernel/ {print $1}')
+info=$(ip route show dev "$interface")
+subnet=$(echo "$info" | awk '/proto kernel/ {print $1}')
 
 ./setup.sh
 # Flush everything and start clean
