@@ -27,8 +27,8 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
     ServerName localhost
 
     ProxyPreserveHost On
-    ProxyPass / http://127.0.0.1:8080/
-    ProxyPassReverse / http://127.0.0.1:8080/
+    ProxyPass / http://127.0.0.1:8000/
+    ProxyPassReverse / http://127.0.0.1:8000/
 
     # No security headers
 </VirtualHost>
@@ -58,8 +58,8 @@ tee /etc/apache2/sites-available/vulnbox.conf  << EOF
     SSLOpenSSLConfCmd CipherString DEFAULT:@SECLEVEL=0
 
     ProxyPreserveHost On
-    ProxyPass / http://127.0.0.1:8080/
-    ProxyPassReverse / http://127.0.0.1:8080/
+    ProxyPass / http://127.0.0.1:8000/
+    ProxyPassReverse / http://127.0.0.1:8000/
 
     Header always unset Strict-Transport-Security
     Header always unset X-Frame-Options
