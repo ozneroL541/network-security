@@ -1,14 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+ <modelVersion>4.0.0</modelVersion>
 
   <groupId>lab</groupId>
   <artifactId>vulnapp</artifactId>
   <version>1.0</version>
 
   <dependencies>
-    <!-- 🔥 Vulnerable Log4j -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
@@ -21,7 +20,6 @@
       <version>2.14.1</version>
     </dependency>
 
-    <!-- Simple HTTP server -->
     <dependency>
       <groupId>com.sparkjava</groupId>
       <artifactId>spark-core</artifactId>
@@ -33,6 +31,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.6.0</version>
         <configuration>
           <archive>
             <manifest>
@@ -45,7 +44,6 @@
         </configuration>
         <executions>
           <execution>
-            <id>make-assembly</id>
             <phase>package</phase>
             <goals><goal>single</goal></goals>
           </execution>
