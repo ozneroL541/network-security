@@ -15,7 +15,9 @@ FROM eclipse-temurin:8-jre-jammy
 # install tools for your lab
 RUN apt-get update -o Acquire::AllowInsecureRepositories=true \
     -o Acquire::AllowDowngradeToInsecureRepositories=true && \
-    apt-get install -y --allow-unauthenticated iproute2 curl
+    apt-get install -y --allow-unauthenticated iproute2 curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 WORKDIR /app
 COPY --from=build /build/target/vulnapp-1.0-jar-with-dependencies.jar .
