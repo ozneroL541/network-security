@@ -4,7 +4,7 @@ FROM maven:3.9.9-eclipse-temurin-8 AS build
 
 WORKDIR /build
 COPY pom.xml .
-RUN mvn -q -e -DskipTests dependency:go-offline
+RUN mvn -q -e -DskipTests org.apache.maven.plugins:maven-dependency-plugin:3.3.0:go-offline
 
 COPY src ./src
 RUN mvn -q -DskipTests package
