@@ -60,6 +60,7 @@ services:
     build:
       context: ./network/vulnbox-1
       dockerfile: Dockerfile
+    image: vulnbox1:latest
     container_name: vulnbox1
     hostname: vulnbox1
     networks:
@@ -77,6 +78,7 @@ services:
     build:
       context: ./network/vulnbox-2
       dockerfile: Dockerfile
+    image: vulnbox2:latest
     container_name: vulnbox2
     hostname: vulnbox2
     networks:
@@ -94,6 +96,7 @@ services:
     build:
       context: ./network/vulnbox-3
       dockerfile: Dockerfile
+    image: vulnbox3:latest
     container_name: vulnbox3
     hostname: vulnbox3
     networks:
@@ -109,6 +112,7 @@ services:
     build:
       context: ./network/vulnbox-4
       dockerfile: Dockerfile
+    image: vulnbox4:latest
     container_name: vulnbox4
     hostname: vulnbox4
     networks:
@@ -124,6 +128,7 @@ services:
     build:
       context: ./network/vulnbox-5
       dockerfile: Dockerfile
+    image: vulnbox5:latest
     container_name: vulnbox5
     hostname: vulnbox5
     networks:
@@ -141,6 +146,7 @@ services:
     build:
       context: ./network/vulnbox-6
       dockerfile: Dockerfile
+    image: vulnbox6:latest
     container_name: vulnbox6
     hostname: vulnbox6
     networks:
