@@ -15,9 +15,9 @@
 
 | Container  | IP            | IP 2          | Service                           | Default Creds              |
 |------------|---------------|---------------|-----------------------------------|----------------------------|
-| vulnbox1   | 172.30.0.2/24 | 172.30.1.1/24 | Ubuntu 22.04                      | – |
-| vulnbox2   | 172.30.1.2/24 | 172.30.2.1/24 | Apache Struts 2.3.31              | - | 
-| vulnbox3   | 172.30.2.2/24 |               | DVWA – SQLi, XSS, CSRF, RFI, etc. | root:p@ssw0rd |
+| vulnbox1   | 172.30.0.2/24 | 172.30.1.1/24 | Log4J                             | –                          |
+| vulnbox2   | 172.30.1.2/24 | 172.30.2.1/24 | Apache Struts 2.3.31              | -                          | 
+| vulnbox3   | 172.30.2.2/24 |               | DVWA – SQLi, XSS, CSRF, RFI, etc. | root:p@ssw0rd              |
 | vulnbox4   | 172.30.2.3/24 |               | SSH weak passwords                | admin:admin123, user:password, root:toor  |
 | vulnbox5   | 172.30.2.4/24 | 172.30.3.1/24 | Samba open share                  | guest:guest                |
 | vulnbox6   | 172.30.3.2/24 |               | MySQL no-root-password            | root (no password)         |
