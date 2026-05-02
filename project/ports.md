@@ -1,4 +1,6 @@
-# Ports
+# Laboratory
+
+![Laboratory Network Topology](net-sec-lab.png)
 
 ## Debian
 ### Host OS - 192.168.56.101 172.30.0.1
