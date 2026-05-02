@@ -1,12 +1,12 @@
 #!/bin/bash
 
-apt-get update
-apt-get install -y rsyslog
-apt-get clean
-rm -rf /var/lib/apt/lists/*
+#apt-get update
+#apt-get install -y rsyslog
+#apt-get clean
+#rm -rf /var/lib/apt/lists/*
 
 # Enable UDP + TCP syslog reception
-cat <<EOF > /etc/rsyslog.d/10-remote.conf
+cat << EOF > /etc/rsyslog.d/10-remote.conf
 # Load modules
 module(load="imudp")
 input(type="imudp" port="514")
