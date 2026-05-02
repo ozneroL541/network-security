@@ -1,6 +1,8 @@
 #!/bin/bash
 
-apt install -y cups
+apt-get update
+apt-get install -y cups
+rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 tee /etc/cups/cupsd.conf << EOF
 Listen 0.0.0.0:631

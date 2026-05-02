@@ -1,0 +1,51 @@
+\chapter{Initial configuration}
+\label{chap:initial_configuration}
+
+\section{Greenbone}
+\label{sec:greenbone}
+Greenbone/OpenVAS is an open-source vulnerability 
+scanning tool that provides comprehensive security 
+assessments for IT systems.
+To set up Greenbone/OpenVAS, firstly download the official 
+Greenbone/OpenVAS OVA file from the Greenbone website.\\
+\href{https://www.greenbone.net/en/openvas-free/}{https://www.greenbone.net/en/openvas-free/} \\
+Then, import the OVA file into
+VirtualBox 6.1 or higher.
+Assign at least 5GB of RAM and 2 CPU cores to the virtual machine. 
+It's better to use about 12GB of RAM.
+For the first configuration, use the bridge network adapter, which allows the virtual machine to be on the same network as the host machine.
+Start the Greenbone/OpenVAS virtual machine and follow the on-screen instructions to complete the initial setup.
+Assign a user for the web interface.
+Once the setup is complete, access the Greenbone/OpenVAS update the feed 
+by going to \texttt{Maintenance>Feed>Update} and wait it to synchronize
+(ususally hours).
+
+\section{Debian}
+\label{sec:debian}
+Debian is an open-source operating system based on GNU/Linux.
+It will be used as a base to create a vulnerable machine.
+\subsection{Apache}
+\label{sec:apache}
+Install Apache web server and create weak certificates for it.
+configure Apache to allow the use of weak protocols 
+and ciphers, such as SSLv3, TLS1.1, DES, RC4 and MD5.
+\inputminted{bash}{../project/apache/setup.sh}
+Any website can be used as exposed service. 
+In our case we used an old project of ours,
+properly modified to be vulnerable.\\
+\texttt{\href{https://github.com/ozneroL541/artigianato-online.git}
+{git clone -b vulnerable https://github.com/ozneroL541/artigianato-online.git}}
+To run it execute the following commands in the terminal:
+\begin{minted}{bash}
+cd artigianato-online/src
+docker compose up --remove-orphans -d
+\end{minted}
+
+\subsection{Cups}
+\label{sec:cups}
+Install the CUPS printing system and configure it to allow remote administration without authentication.
+\inputminted{bash}{../project/cups/setup.sh}
+
+%\subsection{Docker Vulnet}
+%\label{sec:docker-vulnet}
+

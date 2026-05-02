@@ -1,5 +1,15 @@
 \documentclass{report}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\setminted{
+  breaklines=true,
+  fontsize=\footnotesize,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  linenos=true
+}
 
 % Metadata
 \title{Vulnerability assessment\\\large OpenVAS/Greenbone}
@@ -10,5 +20,5 @@
 \maketitle
 \tableofcontents
 \input{introduction/Introduction.tex}
-\input{section_1/network_configuration.tex}
+\input{section_1/initial_configuration.tex}
 \end{document}
