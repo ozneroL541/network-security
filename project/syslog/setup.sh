@@ -15,7 +15,7 @@ module(load="imtcp")
 input(type="imtcp" port="514")
 
 # Log EVERYTHING from remote hosts
-*.* /var/log/remote/%HOSTNAME%.log
+*.* /var/log/remote.log
 
 # No rate limiting (intentionally bad)
 \$SystemLogRateLimitInterval 0
@@ -26,5 +26,4 @@ systemctl enable rsyslog
 systemctl restart rsyslog
 
 mkdir -p /var/log/
-mkdir -p /var/log/remote
 chmod 777 -R /var/log/
