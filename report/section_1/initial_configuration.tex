@@ -24,6 +24,7 @@ by going to \texttt{Maintenance>Feed>Update} and wait it to synchronize
 \label{sec:debian}
 Debian is an open-source operating system based on GNU/Linux.
 It will be used as a base to create a vulnerable machine.
+We used the latest stable version of Debian, which is Debian 13 Trixie.
 \subsection{Apache}
 \label{sec:apache}
 Install Apache web server and create weak certificates for it.
@@ -150,3 +151,22 @@ PasswordAuthentication no
 The Syslog server is configured to allow remote 
 logging without authentication on port 514.
 \inputminted{bash}{../project/syslog/setup.sh}
+
+\section{Windows XP}
+\label{sec:windows_xp}
+Windows XP is an old operating system that is no longer supported by Microsoft,
+which makes it vulnerable to various types of attacks.
+Just it's mere presence in the network is a vulnerability, since it can be easily exploited by attackers.
+To set up Windows XP, we just installed its virtual machine on VirtualBox and connected it to the same network of the other machines.
+
+\section{Network configuration}
+The whole network configuration is a simple virtual network 
+created with VirtualBox, which allows all the machines to communicate with each other 
+and have no access to other networks, such as the Internet.
+
+\begin{figure}[h!]
+    \label{fig:net-conf}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../project/net-sec-lab.png}
+    \caption{Full laboratory's network}
+\end{figure}
