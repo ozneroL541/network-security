@@ -133,10 +133,20 @@ pam_service_name=vsftpd
 
 \subsection{Samba}
 \label{sec:samba}
-%TODO
+The Samba server is configured to allow insecure access to a shared folder.
+\inputminted{bash}{../project/samba/setup.sh}
+
 \subsection{SSH}
 \label{sec:ssh}
-%TODO
+The SSH server is configured with weak configurations,
+such as:
+\begin{minted}{yaml}
+PermitRootLogin yes
+PasswordAuthentication no
+\end{minted}
+
 \subsection{Syslog}
 \label{sec:syslog}
-%TODO
+The Syslog server is configured to allow remote 
+logging without authentication on port 514.
+\inputminted{bash}{../project/syslog/setup.sh}

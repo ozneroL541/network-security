@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt install -y samba
+apt-get install -y samba
 
 tee /etc/samba/smb.conf << EOF
 [global]
