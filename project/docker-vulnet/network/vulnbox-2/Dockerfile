@@ -20,7 +20,7 @@ RUN apt-get update -qq && \
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
-# ── Tomcat 8.5 ──────────────────────────────────────────────
+# -- Tomcat 8.5 ----------------------------------------------
 ENV TOMCAT_VERSION=8.5.87
 ENV CATALINA_HOME=/opt/tomcat
 
@@ -30,7 +30,7 @@ RUN wget -q "https://archive.apache.org/dist/tomcat/tomcat-8/v${TOMCAT_VERSION}/
     tar xzf /tmp/tomcat.tar.gz -C "$CATALINA_HOME" --strip-components=1 && \
     rm /tmp/tomcat.tar.gz
 
-# ── Struts 2.3.31 showcase WAR (contains the vulnerable REST plugin) ──
+# -- Struts 2.3.31 showcase WAR (contains the vulnerable REST plugin) --
 ENV STRUTS_VERSION=2.3.31
 
 RUN wget -q "https://archive.apache.org/dist/struts/${STRUTS_VERSION}/struts-${STRUTS_VERSION}-apps.zip" \

@@ -46,6 +46,97 @@ docker compose up --remove-orphans -d
 Install the CUPS printing system and configure it to allow remote administration without authentication.
 \inputminted{bash}{../project/cups/setup.sh}
 
-%\subsection{Docker Vulnet}
-%\label{sec:docker-vulnet}
+\subsection{Docker Vulnet}
+\label{sec:docker-vulnet}
+To simulate a complex network environment, we are using a 
+docker container with multiple vulnerable services.
+The scope of this network is to show the capabilities 
+of Greenbone/OpenVAS in scanning a complex system.
+\begin{figure}[h!]
+    \label{fig:docker-vulnet-conf}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../project/docker-vulnet/container-network.png}
+    \caption{Docker network configuration}
+\end{figure}
+To set up the network we used the following docker compose file:
+\inputminted{yaml}{../project/docker-vulnet/docker-compose.yml}
 
+To ensure proper network setup it was crucial to set the correct
+routes throgh all the containers, so that they could communicate 
+with each other in the way we wanted. 
+To do so we wrote the following script:
+\inputminted{bash}{../project/docker-vulnet/setup.sh}
+
+To let Greenbone/OpenVAS scan the containers, 
+we had to crete further rules.
+Since the VM is inteded as a vulnerable machine,
+we had no intention to let the firewall block any traffic, 
+therefore, firstly, we flushed all its rules and then 
+we build up our own ruleset, which allows all the traffic 
+from the Greenbone/OpenVAS to the container's network.
+\inputminted{bash}{../project/docker-vulnet/hardcore-setup.sh}
+
+\subsubsection{vulnbox1}
+\label{sec:vulnbox1}
+The first vulnbox was intentended to be vulnerable to 
+log4Shell (CVE-2021-44228), a critical vulnerability 
+in the Apache Log4j library.
+However, since the container was handmade, 
+Greenbone/OpenVAS was not able to detect it.
+\inputminted{yaml}{../project/docker-vulnet/network/vulnbox-1/Dockerfile}
+Even it the vulnerability was not detected, 
+the main role of the first vulnbox was to route all the traffic 
+to the docker network and vice versa and, in that sense, 
+it was successful.
+
+\subsubsection{vulnbox2}
+\label{sec:vulnbox2}
+The second vulnbox present a vulnerable version of the 
+Apache Struts framework, which is affected by the 
+CVE-2017-5638 vulnerability.
+\inputminted{yaml}{../project/docker-vulnet/network/vulnbox-2/Dockerfile}
+
+\subsubsection{vulnbox3}
+\label{sec:vulnbox3}
+The third vulnbox is based on DVWA (Damn Vulnerable Web Application), 
+a web application that is intentionally vulnerable 
+to various types of attacks.
+We had no clue if Greenbone/OpenVAS would have been able to detect any vulnerabilities here,
+but since it's in fact the scope of such experiment, we decided to include it.
+\inputminted{yaml}{../project/docker-vulnet/network/vulnbox-3/Dockerfile}
+
+\subsubsection{vulnbox4}
+\label{sec:vulnbox4}
+The fourth vulnbox is a simple Ubuntu 22.04 image 
+with weak SSH credentials.
+\inputminted{yaml}{../project/docker-vulnet/network/vulnbox-4/Dockerfile}
+
+\subsubsection{vulnbox5}
+\label{sec:vulnbox5}
+The fifth vulnbox is a weak Samba server.
+\inputminted{yaml}{../project/docker-vulnet/network/vulnbox-5/Dockerfile}
+
+\subsubsection{vulnbox6}
+\label{sec:vulnbox6}
+The sixth vulnbox is a MySQL server with no password.
+\inputminted{yaml}{../project/docker-vulnet/network/vulnbox-6/Dockerfile}
+
+\subsection{FTP}
+\label{sec:ftp}
+The FTP server is a simple instance of \texttt{vsftpd}
+with multiple weak configurations, such as:
+\begin{minted}{yaml}
+local_enable=YES
+write_enable=YES
+pam_service_name=vsftpd
+\end{minted}
+
+\subsection{Samba}
+\label{sec:samba}
+%TODO
+\subsection{SSH}
+\label{sec:ssh}
+%TODO
+\subsection{Syslog}
+\label{sec:syslog}
+%TODO

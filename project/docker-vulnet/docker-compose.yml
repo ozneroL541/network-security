@@ -27,7 +27,7 @@ networks:
     driver: bridge
     driver_opts:
       com.docker.network.bridge.name: "vulnlab1"
-    internal: true          # blocks direct host ↔ net1 traffic
+    internal: true          # blocks direct host - net1 traffic
     ipam:
       config:
         - subnet: 172.30.1.0/24
@@ -37,7 +37,7 @@ networks:
     driver: bridge
     driver_opts:
       com.docker.network.bridge.name: "vulnlab2"
-    internal: true          # blocks direct host ↔ net2 traffic
+    internal: true          # blocks direct host - net2 traffic
     ipam:
       config:
         - subnet: 172.30.2.0/24
@@ -55,7 +55,7 @@ networks:
 
 
 services:
-  # ─── VULNBOX 1 – Entering node ─────────────────────────
+  # --- VULNBOX 1 – Entering node -------------------------
   vulnbox1:
     build:
       context: ./network/vulnbox-1
@@ -73,7 +73,7 @@ services:
     privileged: true
     restart: unless-stopped
 
-  # ─── VULNBOX 2 – Apache Struts 2.3.31 (CVE-2017-5638) ────
+  # --- VULNBOX 2 – Apache Struts 2.3.31 (CVE-2017-5638) ----
   vulnbox2:
     build:
       context: ./network/vulnbox-2
@@ -91,7 +91,7 @@ services:
     privileged: true
     restart: unless-stopped
 
-  # ─── VULNBOX 3 – DVWA ─────────────────────────────────────
+  # --- VULNBOX 3 – DVWA -------------------------------------
   vulnbox3:
     build:
       context: ./network/vulnbox-3
@@ -107,7 +107,7 @@ services:
     privileged: true
     restart: unless-stopped
 
-  # ─── VULNBOX 4 – SSH weak credentials ────────────────────
+  # --- VULNBOX 4 – SSH weak credentials --------------------
   vulnbox4:
     build:
       context: ./network/vulnbox-4
@@ -123,7 +123,7 @@ services:
     privileged: true
     restart: unless-stopped
 
-  # ─── VULNBOX 5 – Samba ───────────────────────────────────
+  # --- VULNBOX 5 – Samba -----------------------------------
   vulnbox5:
     build:
       context: ./network/vulnbox-5
@@ -141,7 +141,7 @@ services:
     privileged: true
     restart: unless-stopped
 
-  # ─── VULNBOX 6 – MySQL no root password ──────────────────
+  # --- VULNBOX 6 – MySQL no root password ------------------
   vulnbox6:
     build:
       context: ./network/vulnbox-6
