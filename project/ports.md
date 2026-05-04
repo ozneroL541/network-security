@@ -65,6 +65,7 @@ T:22,T:80,T:139,T:445,T:3306,T:8080
 | 13/tcp    | open              | daytime           |
 | 17/tcp    | open              | qotd              |
 | 19/tcp    | open              | chargen           |
+| 21/tcp    | open      	| ftp	            |
 | 25/tcp    | open              | smtp              |
 | 80/tcp    | open              | http              |
 | 135/tcp   | open              | msrpc             |
