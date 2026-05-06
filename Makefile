@@ -1,17 +1,17 @@
-.PHONY: all report slides clean
+.PHONY: all report presentation clean
 
-all: report slides
+all: report presentation
 
 report:
 	$(MAKE) -C report
 
-slides:
-	$(MAKE) -C slides
+presentation:
+	$(MAKE) -C presentation
 
 clean:
 	$(MAKE) -C report clean
-	$(MAKE) -C slides clean
+	$(MAKE) -C presentation clean
 
 delete:
 	$(MAKE) -C report delete
-	$(MAKE) -C slides delete
+	$(MAKE) -C presentation delete
