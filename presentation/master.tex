@@ -15,107 +15,20 @@
 
 \title{Vulnerability assessment}
 \subtitle{OpenVAS/Greenbone}
-\author[Balzarini Beatrice, Fagnani Marco, Radice Lorenzo]{Balzarini Beatrice, Fagnani Marco, Radice Lorenzo}
+\author[Fagnani Marco, Radice Lorenzo]{Fagnani Marco \\ Radice Lorenzo}
 \date{May 19, 2026}
 
 \begin{document}
 
 % notice usage of \titleframe and several other unconventional functions
 % the reason being is custom backgrounds on these slides
-
-\titleframe		% title
-
-\tocframe{}		% this custom frame accepts options for ToC
-
-\section{Colours}
-
-\sectionframe	% section title is automatically capitalised
-
-\begin{frame}[fragile]
-\frametitle{Bullets and alerted text}
-Environment \verb"itemize" has green bullets:
-\begin{itemize}
-	\item first item
-	\item second item
-	\item third item
-\end{itemize}
-
-Also notice that \alert{alerted} text is green. Bullets and alerted text are {\color{tpugreen}light green} on dark background and {\color{tpudarkgreen}dark green} --- on light
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{More colours}
-There are also several pre-defined colours for usage in tables and graphs
-\begin{table}
-\begin{center}
-\begin{tabular}{ *{2}{c l} }
-	\begin{tikzpicture}\fill[color = extragreen] (0,0) rectangle (1,0.5);\end{tikzpicture} & \verb"extragreen" & \begin{tikzpicture}\fill[color = extrared] (0,0) rectangle (1,0.5);\end{tikzpicture} & \verb"extrared" \\
-	\begin{tikzpicture}\fill[color = extrablue] (0,0) rectangle (1,0.5);\end{tikzpicture} & \verb"extrablue" & \begin{tikzpicture}\fill[color = extraorange] (0,0) rectangle (1,0.5);\end{tikzpicture} & \verb"extraorange"
-\end{tabular}
-\end{center}
-\end{table}%
-\end{frame}
-
-\section{Graphics}
-
-\sectionframe
-
-\subsection{Pictures}
-
-\begin{frame}[fragile]
-\frametitle{Pictures}
-\begin{multicols}{2}
-Pictures can be placed like in every \LaTeX\ document
-
-Package \verb"multicol" is useful for side-by-side composition
-
-There are several pictures provided by TPU as backgrounds for slides, look at \verb"beamerinnerthemetpu.sty" to learn~more
-\columnbreak
-\begin{figure}
-\begin{center}
-\includegraphics[height=0.6\textheight]{bgs/titlemicroscope}
-\end{center}
-\end{figure}
-\end{multicols}
-\end{frame}
-
-\subsection{Icons}
-
-\frame{
-\frametitle{Icons}
-TPU provides icons for most popular social networks. These can be seen used on the `Contacts' frame. Example of usage:
-
-\includegraphics[height=0.6\baselineskip]{icons/white/twitter} @tpu	% icon can be placed more beautiful using TikZ, but this is just an example
-
-Icons not related to social networks can be found on the TPU website
-}
-
-\section{Extras}
-
-\sectionframe
-
-\frame{
-	\frametitle{Citation}
-\begin{tikzpicture}[remember picture,overlay,every node/.style={scale=2}]		% big quotation mark
-%	\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-	\node[inner sep=0] (current page.west) {\Huge \bfseries\color{\TPUsubcolor}<<};
-\end{tikzpicture}
-
-\vskip -0.5\baselineskip	% aligning centre of quotation mark to the centre of the first line
-
-\begin{quote}
-TPU provides an example of a citation frame, this is more or less reconstruction of it
-
-You can use this as an example or do it the way you like
-\end{quote}
-}
-
-% contacts frame accepts main argument (will be in the centre left) and an optional argument (bottom)
-% first line or two repeat the \author on the title page
-% notice that language of the frame title is connected to the language of the logo
-
-\contactsframe[Thanks for the attention]{Project repository avaiable at:\\
-\includegraphics[height=0.6\baselineskip]{icons/white/github}\ \href{https://github.com/ozneroL541/network-security}{https://github.com/ozneroL541/network-security}\\
-}
+\include{slides/00_title}
+\include{slides/01_contents}
+\include{slides/02_placeholder}
+\include{slides/03_placeholder}
+\include{slides/04_placeholder}
+\include{slides/05_placeholder}
+\include{slides/06_placeholder}
+\include{slides/99_contacts}
 \end{document}
 
