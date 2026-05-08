@@ -7,13 +7,16 @@
 \RequirePackage[skins]{tcolorbox}
 \RequirePackage{setspace}
 
+\newif\ifdarktheme
 % options for light/dark theme and the English logo
 
 \DeclareOptionBeamer{dark}{
 	\def \TPUtheme {dk}
+	\darkthemetrue
 }
 \DeclareOptionBeamer{light}{
 	\def \TPUtheme {lt}
+	\darkthemefalse
 }
 
 \DeclareOptionBeamer{enlogo}{
