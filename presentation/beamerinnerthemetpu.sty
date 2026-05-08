@@ -13,7 +13,7 @@
 
 \DeclareOptionBeamer{en}{
 	\def \TPUlang {en}
-	\def \TPUcontacts{Contacts}
+	\def \TPUcontacts{Thanks for the attention}
 }
 
 \ExecuteOptionsBeamer{lt,en}	% default is light theme and english logo
@@ -75,7 +75,9 @@
 	\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
 	\node[anchor=south west,inner sep=0pt] at (0,0.678*\the\paperheight) {\usebeamerfont{title}\TPUcontacts};
 	\node[text width=0.569*\the\paperwidth,anchor=north west,inner sep=0pt] at (0,0.604*\the\paperheight) {\parbox[][0.13\paperheight][t]{0.569\paperwidth}{\usebeamerfont{author}\insertauthor\\#2}};
-	\node[text width=0.569*\the\paperwidth,anchor=north west,inner sep=0pt] at (0,0.139*\the\paperheight) {\parbox[][0.13\paperheight][t]{0.569\paperwidth}{\usebeamerfont{author}\textcolor{tpuwhite}{#1}}};
+  \node[text width=0.569*\the\paperwidth,anchor=north west,inner sep=0pt] at (0,0.139*\the\paperheight) {\parbox[][0.13\paperheight][t]{0.569\paperwidth}{\usebeamerfont{author}\textcolor{tpuwhite}{\begin{spacing}{0.5}
+  \scriptsize{#1}
+  \end{spacing}}}};	% optional argument is used for the declaration of AI usage, feel free to change the formatting
 	\end{tikzpicture}
 	}
 	\setslidebg	
