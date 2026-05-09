@@ -32,7 +32,7 @@
     - Services (refer to the PDF report)
       - Apache
       - CUPS
-      - Docker vulnnet
+      - Docker vulnet
       - FTP
       - Samba
       - SSH

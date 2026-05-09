@@ -15,7 +15,7 @@
     - Docker network
     - How it was configured
     - Start a VM without an interface
-    - Bring up the Docker network (`docker-vulnnet`)
+    - Bring up the Docker network (`docker-vulnet`)
     - Start network discovery (mention that it will take a long time and results may not be immediately visible)
     - 5-minute exercise break
     - Show the report yourself and explain key points
@@ -32,7 +32,7 @@
     - Services (refer to the PDF report)
       - Apache
       - CUPS
-      - Docker vulnnet
+      - Docker vulnet
       - FTP
       - Samba
       - SSH
