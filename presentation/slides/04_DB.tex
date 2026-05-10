@@ -2,18 +2,54 @@
 \sectionframe
 
 \begin{frame}[fragile]
-\frametitle{Vulnerability Database}
-\begin{multicols}{2}
-Pictures can be placed like in every \LaTeX\ document
+\frametitle{Greenbone Database}
+\begin{columns}[T,totalwidth=\textwidth]
+\begin{column}{0.75\textwidth}
+The Database is the core of OpenVAS.\\
+It contains all the information about the vulnerabilities
+and the way to check them.\\
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Type of Feed} & \textbf{Price} \\
+    \hline
+    Greenbone Community Feed & Free \\
+    \hline
+    Greenbone Security Feed & 2524 €/year \\
+    \hline
+\end{tabular}
 
-Package \verb"multicol" is useful for side-by-side composition
+\includegraphics[width=0.75\textwidth]{images/GSF.png}
+\end{column}
+\begin{column}{0.25\textwidth}
 
-There are several pictures provided by TPU as backgrounds for slides, look at \verb"beamerinnerthemetpu.sty" to learn~more
-\columnbreak
 \begin{figure}
 \begin{center}
-\includegraphics[height=0.6\textheight]{bgs/titlemicroscope}
+\includegraphics[height=0.4\textheight]{images/postgesql.png}
 \end{center}
 \end{figure}
-\end{multicols}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Database's Structure}
+    \begin{columns}[T,totalwidth=\textwidth]
+    \begin{column}{0.33\textwidth}
+        \begin{center}
+        \includegraphics[width=0.95\textwidth]{images/db1.png}\\[50pt]
+        \includegraphics[width=0.95\textwidth]{images/db3.png}
+        \end{center}
+    \end{column}
+    \begin{column}{0.34\textwidth}
+        %\begin{center}
+        \includegraphics[width=1.0\textwidth]{images/db5.png}
+        %\end{center}
+    \end{column}
+    \begin{column}{0.33\textwidth}
+        \begin{center}
+        \includegraphics[width=0.95\textwidth]{images/db4.png}\\[70pt]
+        \includegraphics[width=0.95\textwidth]{images/db2.png}
+        \end{center}
+    \end{column}
+    \end{columns}
 \end{frame}
