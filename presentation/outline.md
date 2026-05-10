@@ -38,7 +38,8 @@
       - SSH
       - Syslog
 
-  - Identify which IPs are dynamic
+
+  - Identify which IPs are dynamic (this could be an exercize cause it may be different from anybody due to DHCP)
   - Show the full web UI interface, explaining configurations
 
   - Explanation of VMs and services
@@ -47,6 +48,7 @@
     - Credentials allow access using specific credentials only for SSH and Samba
     - Target creation
     - Task creation
+      - Exercise about finding XP http service
     - Results: various reports and commentary
       - Briefly explain the most important vulnerabilities
       - What these vulnerabilities can lead to
