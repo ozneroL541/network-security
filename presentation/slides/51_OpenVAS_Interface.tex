@@ -101,28 +101,6 @@
     \end{columns}
 }
 
-\frame{
-	\frametitle{Scan configs}
-	\begin{center}
-		\includegraphics[width=0.9\textwidth]{images/openvas_scan_config1.png}
-	\end{center}
-}
-\frame{
-	\frametitle{Scan configs}
-	% \begin{center}
-	% 	\includegraphics[width=0.5\textwidth]{images/openvas_scan_config2.png}
-	% \end{center}
-
-	\begin{columns}[T,onlytextwidth]
-       \begin{column}{0.4\textwidth}
-		\includegraphics[width=\textwidth]{images/openvas_scan_config2.png}
-       \end{column}
-       \begin{column}{0.4\textwidth}
-           \centering
-		\includegraphics[width=\textwidth]{images/openvas_scan_config3.png}
-       \end{column}
-    \end{columns}
-}
 % \frame{
 % 	\frametitle{Scan configs}
 % 	\begin{center}
@@ -209,6 +187,42 @@
 
 }
 
+
+\frame{
+	\frametitle{Scan configs}
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{images/openvas_scan_config1.png}
+	\end{center}
+}
+\frame{
+	\frametitle{Scan configs}
+	% \begin{center}
+	% 	\includegraphics[width=0.5\textwidth]{images/openvas_scan_config2.png}
+	% \end{center}
+
+	\begin{columns}[T,onlytextwidth]
+       \begin{column}{0.4\textwidth}
+		\includegraphics[width=\textwidth]{images/openvas_scan_config2.png}
+       \end{column}
+       \begin{column}{0.4\textwidth}
+           \centering
+		\includegraphics[width=\textwidth]{images/openvas_scan_config3.png}
+       \end{column}
+    \end{columns}
+}
+
+\frame{
+	\frametitle{Exercise: Scan for services on Windows XP}
+	Try and start a scan for Windows XP on port 21 and 80 using a custom preset
+	\begin{itemize}
+		\item Go to Configuration $\rightarrow$ Scan Configs
+		\item Create a new configuration by cloning Full and Fast
+		\item Deselect everything that is not windows related
+		\item Create a new target
+		\item Create a new task (remember to make it adjustable, otherwise you have to recreate it from scratch), remember to schedule it
+	\end{itemize}
+
+}
 
 
 \frame{
