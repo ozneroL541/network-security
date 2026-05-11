@@ -18,7 +18,9 @@ Start the Greenbone/OpenVAS virtual machine and follow the on-screen instruction
 Assign a user for the web interface.
 Once the setup is complete, access the Greenbone/OpenVAS update the feed 
 by going to \texttt{Maintenance>Feed>Update} and wait it to synchronize
-(ususally hours).
+(ususally hours).\\
+
+\includegraphics[width=0.8\textwidth]{../presentation/images/gs_feed_update.png}
 
 \section{Debian}
 \label{sec:debian}
@@ -160,7 +162,7 @@ Just it's mere presence in the network is a vulnerability, since it can be easil
 To set up Windows XP, we just installed its virtual machine on VirtualBox and connected it to the same network of the other machines.
 
 \section{Network configuration}
-The whole network configuration is a simple virtual network 
+The whole network configuration is an Host-only virtual network 
 created with VirtualBox, which allows all the machines to communicate with each other 
 and have no access to other networks, such as the Internet.
 
@@ -170,3 +172,17 @@ and have no access to other networks, such as the Internet.
     \includegraphics[width=0.8\textwidth]{../project/net-sec-lab.png}
     \caption{Full laboratory's network}
 \end{figure}
+
+In order to create the virtual network and connect all the machines to it,
+we followed the following procedure:
+\begin{enumerate}
+    \item Create a Host-only network in VirtualBox\\
+
+    \includegraphics[width=0.9\textwidth]{../presentation/images/net_setup_1.png}
+    \item Enable the DHCP server for the Host-only network enough to assign IP addresses to all the 3 machines\\
+    
+    \includegraphics[width=0.9\textwidth]{../presentation/images/net_setup_2.png}
+    \item Go to settings of each machine and connect it to the Host-only network\\
+
+    \includegraphics[width=0.9\textwidth]{../presentation/images/net_setup_3.png}
+\end{enumerate}
