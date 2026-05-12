@@ -1,0 +1,28 @@
+\documentclass{report}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{subcaption}
+
+\setminted{
+  breaklines=true,
+  fontsize=\footnotesize,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  linenos=true
+}
+
+% Metadata
+\title{Vulnerability assessment\\\large OpenVAS/Greenbone}
+\author{Radice Lorenzo}
+\date{May 13, 2026}
+% Document
+\begin{document}
+\maketitle
+\tableofcontents
+%\input{introduction/Introduction.tex}
+%\input{introduction/initial_configuration.tex}
+\input{section_1/system_discovery.tex}
+%\input{section_2/scan.tex}
+\input{introduction/ai.tex}
+\end{document}

@@ -1,4 +1,4 @@
-TEX := master.tex
+TEX := master.tex lorenzo.tex marco.tex
 PDF := $(TEX:.tex=.pdf)
 
 .PHONY: all clean delete all_clean
