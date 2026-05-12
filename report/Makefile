@@ -1,5 +1,6 @@
-TEX := master.tex lorenzo.tex marco.tex
-PDF := $(TEX:.tex=.pdf)
+MASTER := master lorenzo marco
+TEX := $(addsuffix .tex, $(MASTER))
+PDF := $(addsuffix .pdf, $(MASTER))
 
 .PHONY: all clean delete all_clean
 
@@ -7,13 +8,13 @@ PDF := $(TEX:.tex=.pdf)
 
 all: $(PDF)
 
-$(PDF): $(TEX)
-	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $(TEX)
-	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $(TEX)
-	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $(TEX)
+%.pdf: %.tex
+	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $<
+	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $<
+	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $<
 
 clean:
-	rm -fr *.aux *.log *.out *.toc *.nav *.snm *.vrb *.fdb_latexmk _minted* *.fls *.synctex.gz
+	rm -fr *.aux *.log *.out *.toc *.nav *.snm *.vrb *.fdb_latexmk _minted* *.fls *.synctex.gz *.minted
 
 delete: clean
 	rm -f $(PDF)

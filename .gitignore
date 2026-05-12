@@ -47,3 +47,5 @@
 **/*.swo
 **/.DS_Store
 **/Thumbs.db
+
+*.minted
