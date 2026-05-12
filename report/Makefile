@@ -8,9 +8,9 @@ PDF := $(TEX:.tex=.pdf)
 all: $(PDF)
 
 $(PDF): $(TEX)
-	pdflatex -interaction=nonstopmode -halt-on-error $(TEX)
-	pdflatex -interaction=nonstopmode -halt-on-error $(TEX)
-	pdflatex -interaction=nonstopmode -halt-on-error $(TEX)
+	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $(TEX)
+	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $(TEX)
+	pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $(TEX)
 
 clean:
 	rm -fr *.aux *.log *.out *.toc *.nav *.snm *.vrb *.fdb_latexmk _minted* *.fls *.synctex.gz

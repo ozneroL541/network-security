@@ -159,7 +159,27 @@ logging without authentication on port 514.
 Windows XP is an old operating system that is no longer supported by Microsoft,
 which makes it vulnerable to various types of attacks.
 Just it's mere presence in the network is a vulnerability, since it can be easily exploited by attackers.
+
 To set up Windows XP, we just installed its virtual machine on VirtualBox and connected it to the same network of the other machines.
+To install all vulnerable services you should first acquire a Windows XP Pro Service Pack 1 iso, go to the Control Panel, Add/Remove Windows Components and we enabled every service that was enabled
+
+\begin{figure}[h!]
+    \label{fig:net-conf}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Windowsxp_components1.png}
+    \caption{Full laboratory's network}
+\end{figure}
+
+Then to enable the FTP server select \textbf{Internet Information Services (IIS)}, click \textbf{details} and you should enable it. 
+\begin{figure}[h!]
+    \label{fig:net-conf}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Windowsxp_components2.png}
+    \caption{Full laboratory's network}
+\end{figure}
+
+Then click ok and Windows will install all required packages, then reboot. The FTP service now should be installed. This version of Windows did not have a firewall enabled by default, and even so it was a primitive version so it should not pose issues.
+
 
 \section{Network configuration}
 The whole network configuration is an Host-only virtual network 

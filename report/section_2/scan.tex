@@ -1,5 +1,5 @@
 \chapter{OpenVAS Scan}
-
+In this chapter the most important aspects of OpenVAS are explained, with practical examples to give the reader an understanding of the tools usage.
 \label{cha:openvas_scan}
 
 
@@ -228,8 +228,38 @@ To create it select the Empty config, save it and then edit it by clicking to th
     \label{fig:ftphttptayloredscan2}
 \end{figure}
 
+
+This is far from being a completely optimized scan for our purpose, since we are able to better tailor each section seen here by pressing on the pencil mark, but that would become time consuming since you would select/deselect hundreds of different things it scans, so for semplicity it is ignored in this experiment.
+
 \subsection{Starting the scan}
-Now we are ready to begin the scan, to do this go back to the tasks windows, click on the task add button and do the following:
+Now we are ready to begin the scan, to do this go back to the tasks windows, click on the task add button and add all the settings created so far like this:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/openvas_xpftptask1.png}
+        \caption{FTP task 1} 
+        \label{fig:ftptask1}
+    \end{subfigure}
+    \hfill 
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/openvas_xpftptask2.png}
+        \caption{FTP task 2}
+        \label{fig:ftptask2}
+    \end{subfigure}
+    \label{fig:ftptaska2}
+\end{figure}
+
+This task will scan Windows XP for the FTP service. Now you should have a new task created with the name you gave it, in this case \textbf{WIN XP FTP TASK} like so:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/openvas_createdtasks1.png}
+\end{figure}
+
+Now press the play button to queue it so that it will start, it will take approximately 10 minutes to complete.
 
 
 
