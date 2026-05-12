@@ -3,3 +3,223 @@
 In this chapter we will describe how to perform a System Discovery using OpenVAS.
 There must be clarified that this type of scan is not a Vulnerability Scan, 
 it's just a detection of the targets of a system, their open ports, the services running on them and its whole topology.
+
+\section{Get Debian VM IP address}
+Before performing the System Discovery, we need to know the IP address of the Debian VM,
+since we need to specify it as Greenbone default gateway to reach the docker network where the vulnboxes are located.
+Open the Debian VM, which credentials are:
+\begin{itemize}
+    \item Username: root
+    \item Password: root
+\end{itemize}
+Then go to the folder \texttt{~/network-security/project/docker-vulnet/} 
+and run the command \texttt{bash hardcore-setup.sh} burn down the firewall 
+and build up some rules which allow the Debian machine to redirect the traffic 
+to the docker network.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/debian_start2.png}
+    \caption{Debian VM - Initial setup}
+    \label{fig:debian_setup}
+\end{figure}
+
+After that, run the command \texttt{ip addr | grep 192} to get the IP address of the Debian VM.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/debian_ip.png}
+    \caption{Debian VM - IP address}
+    \label{fig:debian_ip}
+\end{figure}
+
+\section{Configure Greenbone Gateway}
+Before performing the System Discovery, we need to configure the Greenbone Gateway to 
+reach the docker network where the vulnboxes are located.
+Open the OpenVAS VM, which credentials are:
+\begin{itemize}
+    \item Username: admin
+    \item Password: admin
+\end{itemize}
+
+Go to \textbf{Setup>Network>Global Gateway} and change the default gateway 
+according to the IP address of the Debian VM, which we got in the previous section.
+Then save the configuration.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../presentation/images/gs_gateway_1.png}
+        \caption{Greenbone VM - Main Section}
+        \label{fig:about}        
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../presentation/images/gs_gateway_2.png}
+        \caption{Greenbone VM - Global Gateway configuration}
+        \label{fig:gateway_configuration}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../presentation/images/gs_gateway_3.png}
+        \caption{Greenbone VM - Global Gateway configuration (2)}
+        \label{fig:gateway_configuration_2}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../presentation/images/gs_gateway_4.png}
+        \caption{Greenbone VM - Global Gateway configuration (3)}
+        \label{fig:gateway_configuration_3}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../presentation/images/gs_gateway_5.png}
+        \caption{Greenbone VM - Global Gateway configuration (3)}
+        \label{fig:gateway_configuration_3}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../presentation/images/gs_gateway_6.png}
+        \caption{Greenbone VM - Global Gateway configuration (3)}
+        \label{fig:gateway_configuration_3}
+    \end{subfigure}
+    \caption{Greenbone VM - Gateway configuration}    
+\end{figure}
+
+
+\section{Greenbone Web Interface}
+Open the \textit{About} section in the main menu of the Greenbone VM.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_gateway_1.png}
+    \caption{Greenbone VM - Main section}
+    \label{fig:about}
+\end{figure}
+
+Check out the IP address of the VM.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_info.png}
+    \caption{Greenbone VM - About section}
+    \label{fig:web_interface}
+\end{figure}
+
+Open a web browser and type the URL for the wen interface in the search bar.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_web_login.png}
+    \caption{Greenbone Web Interface - Login page}
+    \label{fig:web_interface}
+\end{figure}
+
+Log in with the credentials:
+\begin{itemize}
+    \item Username: admin
+    \item Password: admin
+\end{itemize}
+
+You will see the main page of the web interface.
+
+\section{System Scan}
+Now go to the \textit{Scans} section and click on \textit{Tasks}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_1.png}
+    \caption{Greenbone Web Interface - Main page}
+    \label{fig:web_interface}
+\end{figure}
+
+Modify the \textit{Docker Vulnet} task.
+Edit it by choosing \textit{System Discovery} as the scan configuration, 
+the save the task.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_2.png}
+    \caption{Greenbone Web Interface - Task modification}
+    \label{fig:task_modification}
+\end{figure}
+
+Now we can launch the task pressing the \textit{Play} button.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_3.png}
+    \caption{Greenbone Web Interface - Task launch}
+    \label{fig:task_launch}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_5.png}
+    \caption{Greenbone Web Interface - Task progress}
+    \label{fig:task_progress}
+\end{figure}
+
+After about 10 minutes, the task will be completed and we can see the results.
+To see the results, click on the task and then on the \textit{Report} tab.
+In the upper right corner, click on the \textit{Remove filters} button to see all the results.
+This is required because by default the web interface shows only the results with a severity score, 
+but sice the \textit{System Discovery} scan configuration doesn't detect vulnerabilities, 
+all the results have a severity score of 0, so we need to remove the filters to see them all.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{../presentation/images/gs_sd_4.png}
+    \caption{Greenbone Web Interface - Remove filters}
+    \label{fig:remove_filters}
+\end{figure}
+
+Now we can see all the results of the scan which comprehends:
+\begin{itemize}
+    \item The detected hosts in the given IP range
+    \item The open ports on the hosts
+    \item The services running on the open ports
+    \item The topology of the system
+\end{itemize}
+Even if the scanned system only has 6 vulnboxes, as we can see, 
+OpenVAS detected a lot more hosts, since in the OpenVAS view, each IP 
+address corresponds to a host, and in the scanned system some vulnboxes 
+have more than one IP address, therefore OpenVAS detected all of them as distinct hosts.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_6.png}
+    \caption{Greenbone Web Interface - Scan results}
+    \label{fig:scan_results}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_7.png}
+    \caption{Greenbone Web Interface - Operating Systems}
+    \label{fig:detected_hosts}
+\end{figure}
+
+The results of this scan can be also be seen in the \textit{Assests>Hosts} section 
+of the web interface, where we can see all the detected hosts and their open ports 
+and services.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_8.png}
+    \caption{Greenbone Web Interface - Hosts section}
+    \label{fig:operating_systems}
+\end{figure}
+
+We can here check if the detected topology of the system is correct,
+by comparing it with the one we designed.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../presentation/images/gs_sd_9.png}
+        \caption{Greenbone Web Interface - Detected topology}
+        \label{fig:detected_topology}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=0.8\textwidth]{../project/net-sec-lab.png}
+        \caption{Designed topology}
+        \label{fig:designed_topology}
+    \end{subfigure}
+    \caption{Greenbone Web Interface - Detected topology vs Designed topology}
+\end{figure}
+
+As we can see, the detected topology is correct, even if there are more hosts than
+vulnboxes, the overall topology is connected in the right way.
