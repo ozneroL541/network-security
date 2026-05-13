@@ -1,10 +1,10 @@
 \chapter{OpenVAS Scan}
-In this chapter the most important aspects of OpenVAS are explained, with practical examples to give the reader an understanding of the tools usage.
+In this chapter the most important aspects of Greenbone OpenVAS are explained, with practical examples to give the reader an understanding of the tools usage.
 \label{cha:openvas_scan}
 
 
 \section{OpenVAS Scan}
-In this section it will be explained how to start a scan (that could be just for an host, or a group of hosts). We will create a target, which means declaring which host (or group of hosts) to be scanned, which port range and protocol. 
+In this section it will be explained how to start a scan (that could be just for a host, or a group of hosts). We will create a target, which means declaring which host (or group of hosts) to be scanned, which port range and protocol (TCP or UDP). 
 
 \begin{figure}[H]
     \centering
@@ -12,7 +12,7 @@ In this section it will be explained how to start a scan (that could be just for
     \caption{Scan windows}
 \end{figure}
 
-This is the scan windows, where you will create the tasks which are configurations for the targets and ports that are going to be scanned, how many NVTs (Network Vulnerability Test) are going to be used for the scan, how many concurrent hosts are being scanned at a given moment etc. We will get to all of the configuration in time.
+This is the scan window, where you will create the tasks which are configurations for the targets and ports that are going to be scanned, how many NVTs (Network Vulnerability Test) are going to be used for the scan (done in the Scan config windows under Configuration), how many concurrent hosts are being scanned at a given moment etc. We will get to all of the configuration in time.
 
 \subsection{Configuration $\rightarrow$ Ports}
 
@@ -25,11 +25,11 @@ This is the scan windows, where you will create the tasks which are configuratio
 
 
 
-This is the ports creation interface, you can create custom ports ranges looking for services that use TCP/UDP. For the most part OpenVAS works by giving us templates, in this case are for a complete scans of all IANA (Internet Assigned Numbers Authority) ports, which means it will scan for all $65536$ ports only TCP, UDP, both etc. It really just depends on which preset is chosen. 
+This is the ports creation interface, you can create custom ports ranges looking for services that use TCP/UDP. For the most part OpenVAS works by giving us templates, in this case, they are for a complete scan of all IANA (Internet Assigned Numbers Authority) ports, which means it will scan for all $65536$ ports only TCP, UDP or both. It really just depends on which preset is chosen. 
 
-OpenVAS encodes ports in a format like T:$1-1023$, $4500$,U:$2-100$, $3246$ which means that it will scan for TCP ports between $1$ and $1023$ and 4500 alone, and for UDP ports from $2$ to $100$ and $3246$ alone. In this way you can define ports range and choose to do only TCP or UDP scans.
+OpenVAS encodes ports in a format like \textbf{T:$1-1023$, $4500$,U:$2-100$, $3246$} which means that it will scan for TCP ports between $1$ and $1023$ and $4500$ alone, and for UDP ports from $2$ to $100$ and $3246$ alone. In this way you can define ports range and choose to do only TCP or UDP scans indicated by \textbf{T:} or \textbf{U:}.
 
-Under the hood OpenVAS uses Nmap to scan the ports, and just like it to scan UDP ports it will take considerably longer than TCP. This is because when a TCP request is made, the server either accept the connection or it rejects it, while for UDP being a connection-less protocol will wait until timeout. So beware about this aspect if you don't want the scan to take hours. 
+Under the hood OpenVAS uses Nmap to scan the ports, and just like it UDP ports scan will take considerably longer than TCP. This is because when a TCP request is made, the server either accept the connection or it rejects it, while for UDP being a connectionless protocol will wait until timeout. So beware about this aspect. 
 
 For our experiments we will create two presets: one for ftp service (port $21$) and one for an http server (port $80$). Go on the add port icon on the top of the interface (the little square with a plus), and you should get this popup.
 
@@ -80,28 +80,42 @@ Those configurations are going to be used later to scan a Windows XP target with
     \caption{Credentials window}
 \end{figure}
 
-Credentials are used for deeper scans, you give the credentials to OpenVAS and it will try to login to the machine, scanning the host from within, looking at configuration files, installed packages etc. This is done to improve scan performance since it flags problems that are not visible from the outside, but may lead to exploitable vulnerabilities. This function can also be used to check for default credentials if they are in use or no.
+Credentials are used for deeper scans, you give the credentials to OpenVAS and it will try to login to the machine, scanning the host from within, looking at configuration files, installed packages. This is done to improve scan performance since it flags problems that are not visible from the outside, but may lead to exploitable vulnerabilities. This function can also be used to check for default credentials if they are in use or no.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_credentialssetup1.png}
-        \caption{FTP Target Step 1} 
+        \caption{Credentials Configuration Step 1} 
         \label{fig:credentialstarget1}
     \end{subfigure}
     \hfill 
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_credentialssetup2.png}
-        \caption{FTP Target Step 2}
+        \caption{Credentials Configuration Step 2}
         \label{fig:credentialstarget2}
     \end{subfigure}
     \caption{Configuration for the FTP only target}
     \label{fig:credentials_config}
 \end{figure}
 
-As you can see many possibilities are available, setting both username and password, ssh access, certificates etc. But for our example this feature will not be used.
+As you can see many possibilities are available, setting both username and password, ssh access, certificates etc. But for our example this feature will not be used. This feature if used not only will report problems, but it will also write in the report if it had succeeded or failed to log onto the host.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/openvas_authattempt1.png}
+
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/openvas_authattempt2.png}
+    \caption{Example of login attempts in the report exported as PDF in the Full Lab Scan provided in the OpenVAS VM}
+\end{figure}
+
+
 
 \subsection{Target configuration}
 
@@ -147,7 +161,7 @@ After the IP was discovered, its time to configure the target like so:
     \label{fig:full_target_config}
 \end{figure}
 
-In this popup you will set target name, the IP (or range of IPs), the excluded hosts in case you have a range of IPs and some host are not to be scanned, the port list preset made before and the credentials presets that are set in the credentials window (not used in this example).
+In this popup you will set target name, the IP (or range of IPs), the excluded hosts in case you have a range of IPs that are not to be scanned, the port list preset made before and the credentials presets that are set in the credentials window (not used in this example).
 
 
 Now configure the targets also for the FTP and HTTP target like so:
@@ -171,6 +185,7 @@ Now configure the targets also for the FTP and HTTP target like so:
     \label{fig:full_target_config_http}
 \end{figure}
 
+Remember the difference between these two scans is that for the first one we are searching only for the FTP service, while for the second we are searching for FTP and HTTP web server.
 
 \subsubsection{Scan configs}
 
@@ -181,29 +196,29 @@ Now configure the targets also for the FTP and HTTP target like so:
     \caption{Scan configs window}
 \end{figure}
 
-The scan configuration is a configuration used during the scan, essentially it tells OpenVAS how to scan and what to scan. Essentially the Full and Fast preset looks at everything possible from Cisco appliances, Fedora security, Windows services etc. This is the reason why the database is so big, occupying tens of gigabytes. Since there are thousands of settings if we look at every possible configuration, what we will do is to configure a pre-set at a high level tayloring it for Windows XP.
+The scan configuration tells OpenVAS that to scan for and how to scan it. Essentially the Full and Fast preset looks at everything possible from Cisco appliances, Fedora security, Windows services etc. This is the reason why the database is so big, occupying tens of gigabytes. Since there are thousands of settings, to save time we will configure a pre-set at a high level tailoring it for Windows XP.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/openvas_tayloredscan.png}
-    \caption{Taylored scan creation}
+    \includegraphics[width=0.8\textwidth]{images/openvas_tayloredscan10.png}
+    \caption{Tailored scan creation}
 \end{figure}
 
-To create it select the Empty config, save it and then edit it by clicking to the pencil icon, select the following:
+To create it select the Full and Fast preset, save it and then edit it by clicking to the pencil icon, then deselect everything that is not in the following.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_tayloredscan1.png}
-        \caption{FTP \& HTTP Taylored scan options 1} 
+        \caption{FTP \& HTTP Tailored scan options 1} 
         \label{fig:ftphttptaylored1}
     \end{subfigure}
     \hfill 
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_tayloredscan2.png}
-        \caption{FTP \& HTTP Taylored scan options 2}
+        \caption{FTP \& HTTP Tailored scan options 2}
         \label{fig:ftphttptaylored2}
     \end{subfigure}
     \label{fig:ftphttptayloredscan1}
@@ -214,22 +229,26 @@ To create it select the Empty config, save it and then edit it by clicking to th
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_tayloredscan3.png}
-        \caption{FTP \& HTTP Taylored scan options 3} 
+        \caption{FTP \& HTTP Tailored scan options 3} 
         \label{fig:ftphttptaylored3}
     \end{subfigure}
     \hfill 
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_tayloredscan4.png}
-        \caption{FTP \& HTTP Taylored scan options 4}
+        \caption{FTP \& HTTP Tailored scan options 4}
         \label{fig:ftphttptaylored4}
     \end{subfigure}
-    \caption{Configuration for the FTP \& HTTP taylored scan}
+    \caption{Configuration for the FTP \& HTTP Tailored scan}
     \label{fig:ftphttptayloredscan2}
 \end{figure}
 
 
-This is far from being a completely optimized scan for our purpose, since we are able to better tailor each section seen here by pressing on the pencil mark, but that would become time consuming since you would select/deselect hundreds of different things it scans, so for semplicity it is ignored in this experiment.
+
+This is far from being a completely optimized scan for our purpose, since we are able to better tailor each section seen here by pressing on the pencil mark, but that would become time consuming since you would select/deselect hundreds of different things it scans, so for simplicity it is ignored in this experiment.
+
+We selected the Full and Fast preset because for each category of scan there are hundreds or even thousands of possibile subconfiguration. If you are curious about it just click the edit icon in the scan configuration popup that will show you how many configurations you can activate/deactivate. These suboptions are omitted from the document since it would be too time consuming to explore them, but are left as an exercise to the reader to further explore. 
+
 
 \subsection{Starting the scan}
 Now we are ready to begin the scan, to do this go back to the tasks windows, click on the task add button and add all the settings created so far like this:
@@ -252,31 +271,66 @@ Now we are ready to begin the scan, to do this go back to the tasks windows, cli
     \label{fig:ftptaska2}
 \end{figure}
 
-This task will scan Windows XP for the FTP service. Now you should have a new task created with the name you gave it, in this case \textbf{WIN XP FTP TASK} like so:
+
+This task will scan Windows XP for the FTP service. The options are pretty much self explanatory since you are going to use all the presets set before, the important flag to enable is the alterable task flag just for our convenience. This flag permits you to modify the task at will, otherwise if set to \textbf{no} it would not permit you to alter the task once created, and thus you will have to redo everything. This flag is normally set to false because when you scan a system for vulnerabilities or problems, you would want to correct them, then to verify if the problems have been mitigated you would simply clone the task that you previously executed, start it without modifications (if the alterable flag was true then you would be able to modify it) and then check if all problems are fixed. If you still have problems to be fixed then you should repeat until there are no more.
+ 
+Now you should have a new task created with the name you gave it, in this case \textbf{WIN XP FTP TASK} like so:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/openvas_createdtasks1.png}
 \end{figure}
 
-Now press the play button to queue it so that it will start, it will take approximately 10 minutes to complete. After the scan is done it should appear in the report tab
+Now press the play button to queue it so that it will start, it will take approximately 10 minutes to complete. After the scan is done it should appear in the report tab. Reports are the result of the scan activity, there you will find all the information regarding the scan done, such as host, open ports, vulnerabilities found with its severity score:
 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/xp_scanftp.png}
+\end{figure}
+
+This is what we should see in the report tab, on the scan. These are the problems found by OpenVAS, on the FTP service, mainly it tells us that FTP is unsecure and that it has the anonymous user enabled. In the ports window we can see that it successfully detected port 21.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/xp_scanftpport.png}
+\end{figure}
+
+
+Now we will execute the tailored scan for both FTP and HTTP. The configuration is similar to the previous one, just change the target to the right one and select the tailored scan, remember the alterable task flag.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_tayloredtask1.png}
-        \caption{FTP \& HTTP Taylored task 1} 
+        \caption{FTP \& HTTP Tailored task 1} 
         \label{fig:ftphttptayloredtask1}
     \end{subfigure}
     \hfill 
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/openvas_tayloredtask2.png}
-        \caption{FTP \& HTTP Taylored task 2}
+        \caption{FTP \& HTTP Tailored task 2}
         \label{fig:ftphttptayloredtask2}
     \end{subfigure}
     \label{fig:ftphttptayloredtask1}
 \end{figure}
+
+
+Once the scan is done, you should see something like this if you have configured correctly the Scan configuration and ports:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/xp_scanftpport.png}
+\end{figure}
+
+The scan not only shows the FTP problems you have found before, but it also alerts you about the Internet Information Services (IIS) End of Life (EoL); its vulnerabilities might be used by an attacker, and that the Indexing Service filter of the web server is enabled, which can expose sensitive information about the server and its content, and it might give to an attacker remote system level access to the machine. These are just some of the vulnerabilities of the scans that were found using the tailored scan. 
+
+Those are just a few of the vulnerabilities found, many more are to be found doing a full scan of the host across all ports using the Full and Fast Scan config preset, which is left as an exercise to the reader.
+
+
+
+
+
 
