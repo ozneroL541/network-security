@@ -16,6 +16,9 @@ Then go to the folder \texttt{~/network-security/project/docker-vulnet/}
 and run the command \texttt{bash hardcore-setup.sh} to burn down the firewall 
 and build up some rules which allow the Debian machine to redirect the traffic 
 to the docker network.
+This bash scritpt flush all the iptables rules and then 
+add the minimum number of them to allow the Debian machine to redirect 
+the traffic to the docker network, with proper NATting and forwarding rules.
 
 \begin{figure}[H]
     \centering
