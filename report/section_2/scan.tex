@@ -322,14 +322,22 @@ Once the scan is done, you should see something like this if you have configured
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/xp_scanftpport.png}
+    \includegraphics[width=0.8\textwidth]{images/openvas_xptayloredresults.png}
 \end{figure}
 
 The scan not only shows the FTP problems you have found before, but it also alerts you about the Internet Information Services (IIS) End of Life (EoL); its vulnerabilities might be used by an attacker, and that the Indexing Service filter of the web server is enabled, which can expose sensitive information about the server and its content, and it might give to an attacker remote system level access to the machine. These are just some of the vulnerabilities of the scans that were found using the tailored scan. 
 
 Those are just a few of the vulnerabilities found, many more are to be found doing a full scan of the host across all ports using the Full and Fast Scan config preset, which is left as an exercise to the reader.
 
+\subsubsection{Report}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../presentation/images/openvas_report.png}
+\end{figure}
+
+
+This is the report tab, at the end of the scan you can visualize the result of the scans, export it in pdf by clicking on the interested report, then the download icon on top of the page and it will open a popup to download it in various formats, with PDF being the best option for visualization. The report does not serve only as a list of the vulnerabilities found, but also it gives the user the mitigation step to fix a certain vulnerability, or at least point in the right direction.
 
 
 
